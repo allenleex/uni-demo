@@ -1,3 +1,4 @@
+<!--
 <template>
 	<view class="content">
 		<image class="logo" src="/static/logo.png"></image>
@@ -6,6 +7,25 @@
 		</view>
 	</view>
 </template>
+-->
+
+<template>
+    <view>
+        <uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" styleType="button" activeColor="#4cd964"></uni-segmented-control>
+        <view class="content">
+            <view v-show="current === 0">
+                选项卡1的内容
+            </view>
+            <view v-show="current === 1">
+                选项卡2的内容
+            </view>
+            <view v-show="current === 2">
+                选项卡3的内容
+            </view>
+        </view>
+    </view>
+</template>
+
 
 <script>
 	export default {
