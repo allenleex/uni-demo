@@ -1,30 +1,149 @@
-<!--
- * @Author: your name
- * @Date: 2021-11-08 16:02:47
- * @LastEditTime: 2021-11-08 16:25:10
- * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: \uni-demo\src\pages\opportunity\new\new.vue
--->
 <template>
   <view class="container">
-		<view class="tui-page__hd">
-			<view class="tui-page__title">表单结构</view>
-			<view class="tui-page__desc">展示表单页面的信息结构样式。</view>
-		</view>
-		<view class="tui-page__hd">
-            <form>
-				<view class="thorui-cells thorui-arrow tui-title">单选列表项</view>
-				<radio-group>
-					<tui-list-cell padding="0" v-for="(item, index) in items" :key="index">
-						<label class="thorui-checkmark thorui-primary thorui-flex__between thorui-padding">
-							<text class="thorui-left__sm">{{ item.name }}</text>
-							<radio :value="item.value" :checked="item.checked || false"></radio>
-						</label>
-					</tui-list-cell>
-				</radio-group>
-            </form>
+    <view class="tui-page__hd">
+      <view class="tui-page__title">发布商机</view>
+      <view class="tui-page__desc">这里描述一句话</view>
+    </view>
+    <view class="tui-page__bd">
+      <view class="tui-section__title"><text>Input输入框</text></view>
+      <tui-list-cell :hover="false">
+        <view class="thorui-input-item">
+          <view class="thorui-input-title">姓名</view>
+          <input
+            class="thorui-input"
+            placeholder="请输入姓名"
+            placeholder-class="thorui-phcolor"
+          />
         </view>
+      </tui-list-cell>
+      <tui-list-cell :hover="false" unlined>
+        <view class="thorui-input-item">
+          <view class="thorui-input-title">联系电话</view>
+          <input
+            type="number"
+            class="thorui-input"
+            placeholder="请输入手机号"
+            placeholder-class="thorui-phcolor"
+            maxlength="11"
+          />
+        </view>
+      </tui-list-cell>
+      <view class="tui-section__title"><text>带清除按钮输入框</text></view>
+      <tui-list-cell :hover="false" unlined>
+        <view class="thorui-input-item">
+          <view class="thorui-input-title">姓名</view>
+          <input
+            class="thorui-input"
+            placeholder="请输入姓名"
+            placeholder-class="thorui-phcolor"
+            v-model="name"
+          />
+          <icon type="clear" :size="14" v-if="name" @tap="name = ''"></icon>
+        </view>
+      </tui-list-cell>
+      <view class="tui-section__title"><text>无标题输入框</text></view>
+      <tui-list-cell :hover="false"
+        ><input
+          class="thorui-input"
+          placeholder="请输入姓名"
+          placeholder-class="thorui-phcolor"
+      /></tui-list-cell>
+      <tui-list-cell :hover="false" unlined
+        ><input
+          class="thorui-input"
+          placeholder="请输入手机号"
+          placeholder-class="thorui-phcolor"
+      /></tui-list-cell>
+
+      <view class="tui-section__title"><text>圆角输入框</text></view>
+      <tui-list-cell :hover="false" unlined>
+        <view class="thorui-input-border"
+          ><input
+            class="thorui-input"
+            placeholder="请输入姓名"
+            placeholder-class="tui-phcolor"
+        /></view>
+      </tui-list-cell>
+      <tui-list-cell :hover="false" unlined>
+        <view class="thorui-input-border thorui-radius__fillet"
+          ><input
+            class="thorui-input"
+            placeholder="请输入姓名"
+            placeholder-class="tui-phcolor"
+        /></view>
+      </tui-list-cell>
+      <tui-list-cell :hover="false" unlined>
+        <view class="thorui-input-border thorui-flex__between">
+          <view class="thorui-input-title">联系电话</view>
+          <input
+            class="thorui-input"
+            placeholder="请输入手机号"
+            placeholder-class="thorui-phcolor"
+          />
+        </view>
+      </tui-list-cell>
+      <tui-list-cell :hover="false" unlined>
+        <view class="thorui-input-border thorui-flex__between">
+          <view class="thorui-flex__between-input-title">消费总额</view>
+          <input
+            class="thorui-input thorui-text-right"
+            placeholder="请输入消费总额"
+            placeholder-class="tui-phcolor"
+          />
+        </view>
+      </tui-list-cell>
+      <view class="tui-section__title"><text>手机验证码</text></view>
+      <tui-list-cell :hover="false" unlined padding="20rpx 30rpx">
+        <view class="thorui-input-item">
+          <view class="thorui-input-title">验证码</view>
+          <input
+            class="thorui-input"
+            placeholder="请输入验证码"
+            placeholder-class="thorui-phcolor"
+            maxlength="6"
+          />
+          <tui-button
+            type="gray-primary"
+            width="200rpx"
+            height="64rpx"
+            :size="30"
+            bold
+            >获取验证码</tui-button
+          >
+        </view>
+      </tui-list-cell>
+      <view class="tui-section__title"><text>图形验证码</text></view>
+      <tui-list-cell :hover="false" unlined padding="20rpx 30rpx">
+        <view class="thorui-input-item">
+          <view class="thorui-input-title">验证码</view>
+          <input
+            class="thorui-input"
+            placeholder="请输入验证码"
+            placeholder-class="thorui-phcolor"
+            maxlength="6"
+          />
+          <image
+            src="/static/images/index/verifyCode.png"
+            class="thorui-verify__code"
+          ></image>
+        </view>
+      </tui-list-cell>
+      <view class="tui-section__title"><text>选择+输入</text></view>
+      <tui-list-cell padding="0" unlined :hover="false">
+        <view class="thorui-input-item">
+          <view class="thorui-cells thorui-select thorui-select__line"
+            >+86</view
+          >
+          <input
+            type="number"
+            class="thorui-input"
+            placeholder="请输入号码"
+            placeholder-class="thorui-phcolor"
+            maxlength="18"
+          />
+        </view>
+      </tui-list-cell>
+    </view>
   </view>
 </template>
 
@@ -32,72 +151,11 @@
 export default {
   data() {
     return {
-      items: [
-        {
-          value: "CHN",
-          name: "中国 CHN",
-          checked: true,
-        },
-        {
-          value: "USA",
-          name: "美国 USA",
-        },
-      ],
-      date: "2020-05-20",
-      companyName: "",
-      range: ["+86", "+80", "+87", "+84"],
-      areaCode: "+86",
-      countrys: ["中国 CHN", "美国 USA", "日本 JPN"],
-      area: "",
-      country: "",
-      serverUrl: "https://api.thorui.cn/",
-      value: [], //初始化图片
+      name: "",
     };
   },
-  onLoad() {
-    //实际应为请求返回数据
-    setTimeout(() => {
-      //实际开发中图片地址应为网络地址
-      this.value = ["/static/images/my/mine_avatar_3x.jpg"];
-    }, 200);
-  },
-  methods: {
-    pickerDate(e) {
-      this.date = e.detail.value;
-    },
-    pickerAreaCode(e) {
-      console.log(e);
-      this.areaCode = this.range[e.detail.value];
-    },
-    selectCountry(e) {
-      this.area = this.countrys[e.detail.value];
-    },
-    pickerCountry(e) {
-      this.country = this.countrys[e.detail.value];
-    },
-    result: function (e) {
-      console.log(e);
-    },
-    remove: function (e) {
-      //移除图片
-      console.log(e);
-    },
-  },
+  methods: {},
 };
 </script>
 
-<style>
-page {
-  background-color: #fff;
-}
-.tui-title {
-  width: 100%;
-  font-size: 28rpx;
-  color: #888;
-  padding: 40rpx 30rpx 20rpx;
-  box-sizing: border-box;
-}
-.tui-btn__box {
-  padding: 60rpx 0;
-}
-</style>
+<style></style>
