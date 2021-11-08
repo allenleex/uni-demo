@@ -425,7 +425,8 @@ export default {
   width: 108rpx;
   height: 108rpx;
   border-radius: 50%;
-  background-color: rgba(86, 119, 252, 0.8);
+  background-color: rgba(86, 119, 252, 0.95);
+  box-shadow: 0px 0px 15px rgba(86, 119, 252, 0.75);
   position: fixed;
   bottom: 100rpx;
   right: 60rpx;
