@@ -1,6 +1,6 @@
 {
 	"name": "",
-	"appid": "wxb1eeb9d2c0815aa2",
+	"appid": "wx08c032ad2a076b53",
 	"description": "",
 	"versionName": "1.0.0",
 	"versionCode": "100",
@@ -54,11 +54,16 @@
 
 	},
 	"mp-weixin": { /* 微信小程序特有相关 */
-		"appid": "wxb1eeb9d2c0815aa2",
+		"appid": "wx08c032ad2a076b53",
 		"setting": {
 			"urlCheck": false
 		},
-		"usingComponents": true
+		"usingComponents": true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "你的位置信息将用于定位效果展示"
+            }
+        }
 	},
 	"mp-alipay" : {
         "usingComponents" : true

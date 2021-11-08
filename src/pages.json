@@ -23,6 +23,17 @@
       }
     },
     {
+      "path": "pages/opportunity/maps/maps",
+      "style": {
+        "navigationBarTitleText": "商机地图",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 50,
+        "app-plus": {
+          "bounce": "vertical"
+        }
+      }
+    },
+    {
       "path": "pages/team/index",
       "style": {
         "navigationBarTitleText": "团队"
@@ -32,6 +43,30 @@
       "path": "pages/resource/index",
       "style": {
         "navigationBarTitleText": "资源"
+      }
+    },
+    {
+      "path": "pages/resource/friend",
+      "style": {
+        "navigationBarTitleText": "微信好友"
+      }
+    },
+    {
+      "path": "pages/resource/group",
+      "style": {
+        "navigationBarTitleText": "微信群"
+      }
+    },
+    {
+      "path": "pages/resource/channel",
+      "style": {
+        "navigationBarTitleText": "推广渠道"
+      }
+    },
+    {
+      "path": "pages/resource/data",
+      "style": {
+        "navigationBarTitleText": "数据资产"
       }
     },
     {

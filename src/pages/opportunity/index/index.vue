@@ -53,7 +53,7 @@
                     height: item.height + 'rpx',
                   }"
                 /> -->
-              <text class="tui-grid-item-value">###</text>
+              <text class="tui-grid-item-value">999</text>
             </view>
             <text class="tui-grid-label">{{ item.name }}</text>
           </tui-grid-item>
@@ -148,12 +148,20 @@
     <!--加载loadding-->
 
     <!-- <tui-fab :btnList="btnList" maskClosable="true" @click="onClick"></tui-fab> -->
-    <view class="tui-switch__box" @tap.stop="btnSwitch">
+    <view class="tui-plus__box" @tap.stop="btnPlus">
       <tui-icon
         size="64"
         unit="rpx"
         color="#fff"
         name="plus"
+      ></tui-icon>
+    </view>
+    <view class="tui-maps__box" @tap.stop="btnMaps">
+      <tui-icon
+        size="64"
+        unit="rpx"
+        color="#fff"
+        name="pic"
       ></tui-icon>
     </view>
   </view>
@@ -375,9 +383,14 @@ export default {
           break;
       }
     },
-    btnSwitch() {
+    btnPlus() {
       uni.navigateTo({
         url: "/pages/opportunity/new/new",
+      });
+    },
+    btnMaps() {
+      uni.navigateTo({
+        url: "/pages/opportunity/maps/maps",
       });
     },
   },
@@ -421,7 +434,7 @@ export default {
 </script>
 
 <style>
-.tui-switch__box {
+.tui-plus__box {
   width: 108rpx;
   height: 108rpx;
   border-radius: 50%;
@@ -429,6 +442,19 @@ export default {
   box-shadow: 0px 0px 15px rgba(86, 119, 252, 0.75);
   position: fixed;
   bottom: 100rpx;
+  right: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tui-maps__box {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+  background-color: rgba(86, 119, 252, 0.95);
+  box-shadow: 0px 0px 15px rgba(86, 119, 252, 0.75);
+  position: fixed;
+  bottom: 250rpx;
   right: 60rpx;
   display: flex;
   align-items: center;
