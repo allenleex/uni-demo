@@ -12,6 +12,17 @@
       }
     },
     {
+      "path": "pages/opportunity/new/new",
+      "style": {
+        "navigationBarTitleText": "发布商机",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 50,
+        "app-plus": {
+          "bounce": "vertical"
+        }
+      }
+    },
+    {
       "path": "pages/team/index",
       "style": {
         "navigationBarTitleText": "团队"

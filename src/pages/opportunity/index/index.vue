@@ -147,7 +147,7 @@
     <tui-nomore v-if="!pullUpOn"></tui-nomore>
     <!--加载loadding-->
 
-    <tui-fab :btnList="btnList" maskClosable="true"></tui-fab>
+    <tui-fab :btnList="btnList" maskClosable="true" @click="onClick"></tui-fab>
   </view>
 </template>
 
@@ -355,6 +355,18 @@ export default {
       uni.navigateTo({
         url: url,
       });
+    },
+    onClick(e) {
+      let index = e.index;
+      switch (index) {
+        case 0:
+          uni.navigateTo({
+            url: "/pages/opportunity/new/new",
+          });
+          break;
+        default:
+          break;
+      }
     },
   },
   //页面相关事件处理函数--监听用户下拉动作
