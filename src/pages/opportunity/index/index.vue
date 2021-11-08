@@ -1,6 +1,6 @@
 <template>
   <view class="tui-container">
-    <view class="tui-searchbox">
+    <!-- <view class="tui-searchbox">
       <view class="tui-rolling-search">
         <icon type="search" :size="13" color="#999"></icon>
         <swiper vertical autoplay circular interval="8000" class="tui-swiper">
@@ -14,7 +14,7 @@
           </swiper-item>
         </swiper>
       </view>
-    </view>
+    </view> -->
     <!--banner-->
     <swiper
       indicator-dots
@@ -147,7 +147,15 @@
     <tui-nomore v-if="!pullUpOn"></tui-nomore>
     <!--加载loadding-->
 
-    <tui-fab :btnList="btnList" maskClosable="true" @click="onClick"></tui-fab>
+    <!-- <tui-fab :btnList="btnList" maskClosable="true" @click="onClick"></tui-fab> -->
+    <view class="tui-switch__box" @tap.stop="btnSwitch">
+      <tui-icon
+        size="64"
+        unit="rpx"
+        color="#fff"
+        name="plus"
+      ></tui-icon>
+    </view>
   </view>
 </template>
 
@@ -346,7 +354,6 @@ export default {
       });
     },
     detail(e) {
-      console.log("-------- detail");
       let index = e.index;
       let url = "../newsDetail/newsDetail";
       if (this.newsList[index].isVideo) {
@@ -367,6 +374,11 @@ export default {
         default:
           break;
       }
+    },
+    btnSwitch() {
+      uni.navigateTo({
+        url: "/pages/opportunity/new/new",
+      });
     },
   },
   //页面相关事件处理函数--监听用户下拉动作
@@ -409,71 +421,16 @@ export default {
 </script>
 
 <style>
-/* #ifdef MP-WEIXIN  */
-.tui-banner-swiper .wx-swiper-dots.wx-swiper-dots-horizontal {
-  width: 100%;
-  top: 280rpx;
-  text-align: right;
-  padding-right: 30rpx;
-  box-sizing: border-box;
+.tui-switch__box {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+  background-color: rgba(86, 119, 252, 0.8);
+  position: fixed;
+  bottom: 100rpx;
+  right: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-.tui-banner-swiper .wx-swiper-dot {
-  width: 8rpx;
-  height: 8rpx;
-  display: inline-flex;
-  background: none;
-  justify-content: space-between;
-}
-
-.tui-banner-swiper .wx-swiper-dot::before {
-  content: "";
-  flex-grow: 1;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 8rpx;
-}
-
-.tui-banner-swiper .wx-swiper-dot-active::before {
-  background: #5677fc;
-}
-
-.tui-banner-swiper .wx-swiper-dot.wx-swiper-dot-active {
-  width: 18rpx;
-}
-
-/* #endif */
-
-/* #ifndef MP-WEIXIN */
->>> .tui-banner-swiper .uni-swiper-dots.uni-swiper-dots-horizontal {
-  width: 100%;
-  top: 280rpx;
-  text-align: right;
-  padding-right: 30rpx;
-  box-sizing: border-box;
-}
-
->>> .tui-banner-swiper .uni-swiper-dot {
-  width: 8rpx;
-  height: 8rpx;
-  display: inline-flex;
-  background: none;
-  justify-content: space-between;
-}
-
->>> .tui-banner-swiper .uni-swiper-dot::before {
-  content: "";
-  flex-grow: 1;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 8rpx;
-}
-
->>> .tui-banner-swiper .uni-swiper-dot-active::before {
-  background: #5677fc;
-}
-
->>> .tui-banner-swiper .uni-swiper-dot.uni-swiper-dot-active {
-  width: 18rpx;
-}
-
-/* #endif */
 </style>

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-08 17:01:30
+ * @LastEditTime: 2021-11-08 17:46:02
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
@@ -18,7 +18,7 @@
         :itemWidth="100 / tabs.length + '%'"
       ></tui-tabs>
     </view>
-    <view class="tab" v-if="currentTeamTab == 0">
+    <view class="tab tab1" v-if="currentTeamTab == 0">
       <view class="tui-searchbox">
         <view class="tui-search-input" @tap="search">
           <icon type="search" :size="15" color="#999"></icon>
@@ -105,7 +105,7 @@
         }}</text>
       </view>
     </view>
-    <view class="tab" v-if="currentTeamTab == 1">
+    <view class="tab tab2" v-if="currentTeamTab == 1">
       <scroll-view scroll-x class="tui-scroll__view">
         <tui-org-tree collapsible :treeData="treeData"></tui-org-tree>
       </scroll-view>

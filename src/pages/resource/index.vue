@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-08 17:04:17
+ * @LastEditTime: 2021-11-08 17:38:36
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
@@ -127,7 +127,30 @@
       </view>
     </view>
 
-    <view class="tab tab2" v-if="currentResourceTab == 2">
+    <view class="tab tab2" v-if="currentResourceTab == 1">
+      <tui-grid>
+        <block v-for="(item, index) in routers" v-if="index < 5" :key="index">
+          <navigator :url="item.url" hover-class="none">
+            <tui-grid-item :cell="5">
+              <view class="tui-grid-icon">
+                <!-- <image
+                  class="tui-grid-img"
+                  :src="'https://thorui.cn/images/basic/' + item.img + '.png'"
+                  :style="{
+                    width: item.width + 'rpx',
+                    height: item.height + 'rpx',
+                  }"
+                /> -->
+                <text class="tui-grid-item-value">###</text>
+              </view>
+              <text class="tui-grid-label">{{ item.name }}</text>
+            </tui-grid-item>
+          </navigator>
+        </block>
+      </tui-grid>
+    </view>
+
+    <view class="tab tab3" v-if="currentResourceTab == 2">
       <view class="tui-searchbox">
         <view class="tui-search-input" @tap="search">
           <icon type="search" :size="13" color="#999"></icon>
