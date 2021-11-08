@@ -121,20 +121,20 @@
       {
         "pagePath": "pages/opportunity/index/index",
         "text": "商机",
-        "iconPath": "static/images/tabbar/code_gray.png",
-        "selectedIconPath": "static/images/tabbar/code_active.png"
+        "iconPath": "static/images/tabbar/opportunity_gray.png",
+        "selectedIconPath": "static/images/tabbar/opportunity_active.png"
       },
       {
         "pagePath": "pages/resource/index",
         "text": "资源",
-        "iconPath": "static/images/tabbar/extend_gray.png",
-        "selectedIconPath": "static/images/tabbar/extend_active.png"
+        "iconPath": "static/images/tabbar/resource_gray.png",
+        "selectedIconPath": "static/images/tabbar/resource_active.png"
       },
       {
         "pagePath": "pages/team/index",
         "text": "团队",
-        "iconPath": "static/images/tabbar/thor_gray.png",
-        "selectedIconPath": "static/images/tabbar/thor_active.png"
+        "iconPath": "static/images/tabbar/team_gray.png",
+        "selectedIconPath": "static/images/tabbar/team_active.png"
       }
     ]
   }
