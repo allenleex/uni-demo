@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-08 10:58:19
+ * @LastEditTime: 2021-11-08 11:57:22
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
@@ -13,12 +13,12 @@
         :tabs="tabs"
         :top="0"
         :isFixed="true"
-        :currentTab="currentTab > 3 ? 0 : currentTab"
+        :currentTab="currentResourceTab > 3 ? 0 : currentResourceTab"
         @change="change"
         :itemWidth="100 / tabs.length + '%'"
       ></tui-tabs>
     </view>
-    <view class="tab tab1" v-if="currentTab==0">
+    <view class="tab tab1" v-if="currentResourceTab==0">
       <tui-grid>
         <block v-for="(item, index) in routers" v-if="index < 5" :key="index">
           <navigator :url="item.url" hover-class="none">
@@ -51,7 +51,7 @@
 export default {
   data() {
     return {
-      currentTab: 0,
+      currentResourceTab: 0,
       tabs: [
         {
           name: "微信好友",
@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     change(e) {
-      this.currentTab = e.index;
+      this.currentResourceTab = e.index;
     },
   },
 };

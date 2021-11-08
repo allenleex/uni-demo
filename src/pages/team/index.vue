@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-08 11:41:20
+ * @LastEditTime: 2021-11-08 11:57:21
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
@@ -13,12 +13,12 @@
         :tabs="tabs"
         :top="0"
         :isFixed="true"
-        :currentTab="currentTab > 3 ? 0 : currentTab"
+        :currentTab="currentTeamTab > 3 ? 0 : currentTeamTab"
         @change="change"
         :itemWidth="100 / tabs.length + '%'"
       ></tui-tabs>
     </view>
-    <view class="tab" v-if="currentTab == 0">
+    <view class="tab" v-if="currentTeamTab == 0">
       <view class="tui-searchbox">
         <view class="tui-search-input" @tap="search">
           <icon type="search" :size="15" color="#999"></icon>
@@ -105,7 +105,7 @@
         }}</text>
       </view>
     </view>
-    <view class="tab" v-if="currentTab == 1">
+    <view class="tab" v-if="currentTeamTab == 1">
       <scroll-view scroll-x class="tui-scroll__view">
         <tui-org-tree collapsible :treeData="treeData"></tui-org-tree>
       </scroll-view>
@@ -126,7 +126,7 @@ export default {
   },
   data() {
     return {
-      currentTab: 0,
+      currentTeamTab: 0,
       tabs: [
         {
           name: "成员名录",
@@ -267,7 +267,7 @@ export default {
   },
   methods: {
     change(e) {
-      this.currentTab = e.index;
+      this.currentTeamTab = e.index;
     },
     touchStart(e) {
       this.touchmove = true;
