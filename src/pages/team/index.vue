@@ -1,27 +1,129 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-08 10:53:40
+ * @LastEditTime: 2021-11-08 11:27:29
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
 -->
 <template>
   <view class="container">
-    <tui-tabs
-      :tabs="tabs"
-      :top="0"
-      :isFixed="true"
-      :currentTab="currentTab > 3 ? 0 : currentTab"
-      @change="change"
-      :itemWidth="100 / tabs.length + '%'"
-    ></tui-tabs>
+    <view>
+      <tui-tabs
+        :tabs="tabs"
+        :top="0"
+        :isFixed="true"
+        :currentTab="currentTab > 3 ? 0 : currentTab"
+        @change="change"
+        :itemWidth="100 / tabs.length + '%'"
+      ></tui-tabs>
+    </view>
+    <view class="tab" v-if="currentTab == 0">
+      <view class="tui-searchbox">
+        <view class="tui-search-input" @tap="search">
+          <icon type="search" :size="15" color="#999"></icon>
+          <text class="tui-search-text">搜索</text>
+        </view>
+      </view>
+      <view
+        class="tui-list-cell tui-cell-last"
+        hover-class="tui-cell-hover"
+        :hover-start-time="150"
+        @tap="detail"
+      >
+        <image src="/static/images/news/2.jpg" class="tui-img"></image>
+        <view class="tui-name">新的朋友</view>
+      </view>
+      <!--searchbox-->
+      <!--联系人列表-->
+      <block v-for="(list, index) in lists" :key="index">
+        <tui-sticky
+          :recalc="1"
+          :scrollTop="scrollTop"
+          stickyHeight="66rpx"
+          :index="index"
+          @change="stickyChange"
+        >
+          <!--tips:sticky组件中最好不要嵌套其他自定义组件-->
+          <template v-slot:header>
+            <view class="tui-list-cell-divider">{{
+              list.letter == "well" ? "#" : list.letter
+            }}</view>
+          </template>
+          <template v-slot:content>
+            <view
+              class="tui-list-cell"
+              :class="{ 'tui-cell-last': last(list.data, index2) }"
+              hover-class="tui-cell-hover"
+              :hover-start-time="150"
+              @tap="detail"
+              v-for="(item, index2) in list.data"
+              :key="index2"
+            >
+              <image
+                :src="
+                  '/static/images/news/' +
+                  (index2 % 2 === 0 && index2 !== 0
+                    ? 'avatar_1.jpg'
+                    : 'avatar_2.jpg')
+                "
+                class="tui-img"
+              ></image>
+              <view class="tui-name">{{ item.name }}</view>
+            </view>
+          </template>
+        </tui-sticky>
+      </block>
+      <!--联系人列表-->
+      <view class="tui-footer" v-if="lists.length">120位联系人</view>
+      <view
+        class="tui-indexed-list-bar"
+        :style="{ height: indexBarHeight + 'px' }"
+      >
+        <view
+          @touchstart.stop="touchStart"
+          @touchmove.stop.prevent="touchMove"
+          @touchend.stop="touchEnd"
+          @touchcancel.stop="touchCancel"
+          @tap="handleClick(index3)"
+          v-for="(items, index3) in lists"
+          :key="index3"
+          class="tui-indexed-list-text"
+          :style="{ height: indexBarItemHeight + 'px' }"
+        >
+          {{ items.letter == "well" ? "#" : items.letter }}
+        </view>
+      </view>
+      <view
+        class="tui-indexed-list-alert"
+        v-if="touchmove && lists[touchmoveIndex].letter"
+      >
+        <text>{{
+          lists[touchmoveIndex].letter == "well"
+            ? "#"
+            : lists[touchmoveIndex].letter
+        }}</text>
+      </view>
+    </view>
+    <view class="tab" v-if="currentTab == 1">
+      <scroll-view scroll-x class="tui-scroll__view">
+        <tui-org-tree collapsible :treeData="treeData"></tui-org-tree>
+      </scroll-view>
+    </view>
   </view>
 </template>
 
 <script>
+import cityData from "@/utils/index.list.js";
 //注意：如果tabs数据动态传值:itemWidth="(100/tabs.length)+'%'"
 export default {
+  computed: {
+    last() {
+      return function (data, index) {
+        return data.length - 1 == index ? true : false;
+      };
+    },
+  },
   data() {
     return {
       currentTab: 0,
@@ -40,12 +142,186 @@ export default {
           name: "我的主页",
         },
       ],
+      treeData: [
+        {
+          text: "广州叽叽喳喳信息科技有限公司",
+          value: 1,
+          //vertical,horizontal 为空则自适应排列
+          align: "",
+          children: [
+            {
+              text: "总经理：XXX",
+              value: 100,
+              children: [
+                {
+                  text: "市场部",
+                  value: 200,
+                  align: "horizontal",
+                  children: [
+                    {
+                      text: "区域经理",
+                      value: 201,
+                      children: [],
+                    },
+                    {
+                      text: "售后服务",
+                      value: 202,
+                      children: [],
+                    },
+                    {
+                      text: "综合助理",
+                      value: 203,
+                      children: [],
+                    },
+                    {
+                      text: "网络工程师",
+                      value: 204,
+                      children: [],
+                    },
+                  ],
+                },
+                {
+                  text: "财务部",
+                  value: 300,
+                  align: "horizontal",
+                  children: [
+                    {
+                      text: "财务",
+                      value: 301,
+                      children: [],
+                    },
+                    {
+                      text: "出纳",
+                      value: 302,
+                      children: [],
+                    },
+                  ],
+                },
+                {
+                  text: "研发部",
+                  value: 400,
+                  align: "horizontal",
+                  children: [
+                    {
+                      text: "设计",
+                      value: 401,
+                      children: [],
+                    },
+                    {
+                      text: "雕刻",
+                      value: 402,
+                      children: [],
+                    },
+                    {
+                      text: "结构工程",
+                      value: 403,
+                      children: [],
+                    },
+                    {
+                      text: "工艺工程",
+                      value: 403,
+                      children: [],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      lists: [],
+      touchmove: false, // 是否在索引表上滑动
+      touchmoveIndex: -1,
+      titleHeight: 0, // A字距离窗口顶部的高度
+      indexBarHeight: 0, // 索引表高度
+      indexBarItemHeight: 0, // 索引表子项的高度
+      winHeight: 0,
+      scrollTop: 0,
     };
+  },
+  onLoad: function (options) {
+    const that = this;
+    setTimeout(() => {
+      uni.getSystemInfo({
+        success: function (res) {
+          let winHeight = res.windowHeight;
+          let barHeight = winHeight - uni.upx2px(232);
+          that.winHeight = winHeight;
+          that.indexBarHeight = barHeight;
+          that.indexBarItemHeight = barHeight / 25;
+          that.titleHeight = uni.upx2px(132);
+          that.lists = cityData.list;
+        },
+      });
+    }, 10);
+  },
+  watch: {
+    touchmoveIndex: function () {
+      if (this.touchmoveIndex != -1) {
+        uni.pageScrollTo({
+          scrollTop: this.lists[this.touchmoveIndex].stickyTop + 1,
+          duration: 10,
+        });
+      }
+    },
   },
   methods: {
     change(e) {
       this.currentTab = e.index;
     },
+    touchStart(e) {
+      this.touchmove = true;
+      let pageY = e.changedTouches[0].pageY - this.scrollTop;
+      let index = Math.floor(
+        (pageY - this.titleHeight) / this.indexBarItemHeight
+      );
+      let item = this.lists[index];
+      if (item) {
+        this.touchmoveIndex = index;
+      }
+    },
+    touchMove(e) {
+      let pageY = e.changedTouches[0].pageY - this.scrollTop;
+      let index = Math.floor(
+        (pageY - this.titleHeight) / this.indexBarItemHeight
+      );
+      let item = this.lists[index];
+      if (item) {
+        this.touchmoveIndex = index;
+      }
+    },
+    touchEnd() {
+      this.touchmove = false;
+      this.touchmoveIndex = -1;
+    },
+    touchCancel() {
+      this.touchmove = false;
+      this.touchmoveIndex = -1;
+    },
+    handleClick(index) {
+      if (index === undefined || this.touchmove) return;
+      let item = this.lists[index];
+      if (item) {
+        this.touchmoveIndex = index;
+      }
+    },
+    stickyChange: function (e) {
+      let index = e.index;
+      this.lists[index].stickyTop = e.top;
+    },
+    search: function () {
+      uni.navigateTo({
+        url: "../../news/search/search",
+      });
+    },
+    detail: function () {
+      uni.navigateTo({
+        url: "../chat/chat",
+      });
+    },
+  },
+  onPageScroll(e) {
+    this.scrollTop = e.scrollTop;
   },
 };
 </script>
@@ -55,25 +331,154 @@ export default {
   padding: 40rpx 0 120rpx 0;
   box-sizing: border-box;
 }
+.tab {
+  margin-top: 28px;
+}
+.tui-scroll__view {
+  width: 100%;
+  height: 960px;
+}
+.tui-searchbox {
+  width: 100%;
+  height: 100rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
 
-.header {
-  padding: 80rpx 90rpx 60rpx 90rpx;
+.tui-search-input {
+  width: 100%;
+  height: 72rpx;
+  background-color: #fafafa;
+  border-radius: 36rpx;
+  font-size: 30rpx;
+  color: #a8abb8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tui-search-text {
+  padding-left: 16rpx;
+}
+
+.tui-list-cell {
+  position: relative;
+  width: 100%;
+  padding: 26rpx 30rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.tui-cell-hover {
+  background: #f7f7f9 !important;
+}
+
+.tui-list-cell::after {
+  content: "";
+  position: absolute;
+  border-bottom: 1rpx solid #eaeef1;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  bottom: 0;
+  right: 0;
+  left: 140rpx;
+}
+
+.tui-cell-last::after {
+  border-bottom: 0 !important;
+}
+
+/*searchbox*/
+
+.tui-img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.tui-name {
+  width: 80%;
+  padding-left: 30rpx;
+  font-size: 34rpx;
+  color: #333;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tui-list-cell-divider {
+  height: 66rpx;
+  padding-left: 30rpx;
+  font-size: 26rpx;
+  color: #555;
+  background-color: #fafafa;
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
   box-sizing: border-box;
 }
 
-.title {
-  font-size: 34rpx;
-  color: #333;
+.tui-indexed-list-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 999999;
+  position: fixed;
+  top: 132rpx;
+  /* #ifdef H5 */
+  top: 220rpx;
+  /* #endif */
+  right: 0;
+  padding-right: 10rpx;
+  width: 44rpx;
+  color: #555;
   font-weight: 500;
 }
 
-.sub-title {
-  font-size: 24rpx;
-  color: #7a7a7a;
-  padding-top: 18rpx;
+.tui-indexed-list-text {
+  font-size: 22rpx;
 }
 
-.tui-primary {
-  color: #5677fc;
+.tui-indexed-list-alert {
+  position: fixed;
+  width: 120rpx;
+  height: 120rpx;
+  right: 90rpx;
+  top: 50%;
+  margin-top: -60rpx;
+  border-radius: 24rpx;
+  font-size: 50rpx;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  z-index: 9999999;
+}
+
+.tui-indexed-list-alert text {
+  line-height: 50rpx;
+}
+
+.tui-footer {
+  padding: 30rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #999;
 }
 </style>
