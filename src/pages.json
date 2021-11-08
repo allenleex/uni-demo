@@ -14,7 +14,7 @@
     {
       "path": "pages/team/index",
       "style": {
-        "navigationBarTitleText": "team"
+        "navigationBarTitleText": "团队"
       }
     },
     {
