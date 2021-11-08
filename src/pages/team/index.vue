@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-08 10:27:11
+ * @LastEditTime: 2021-11-08 10:53:40
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
@@ -27,17 +27,17 @@ export default {
       currentTab: 0,
       tabs: [
         {
-          name: "名录",
+          name: "成员名录",
           isDot: true,
         },
         {
-          name: "架构",
+          name: "组织架构",
         },
         {
-          name: "管理",
+          name: "团队管理",
         },
         {
-          name: "我的",
+          name: "我的主页",
         },
       ],
     };

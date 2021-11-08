@@ -45,7 +45,7 @@
         <navigator :url="item.url" hover-class="none">
           <tui-grid-item :cell="5">
             <view class="tui-grid-icon">
-                <!-- <image
+              <!-- <image
                   class="tui-grid-img"
                   :src="'https://thorui.cn/images/basic/' + item.img + '.png'"
                   :style="{
@@ -53,7 +53,7 @@
                     height: item.height + 'rpx',
                   }"
                 /> -->
-                <text class="tui-grid-item-value">###</text>
+              <text class="tui-grid-item-value">###</text>
             </view>
             <text class="tui-grid-label">{{ item.name }}</text>
           </tui-grid-item>
@@ -146,6 +146,8 @@
     <tui-loadmore v-if="loadding" :index="3" type="primary"></tui-loadmore>
     <tui-nomore v-if="!pullUpOn"></tui-nomore>
     <!--加载loadding-->
+
+    <tui-fab :btnList="btnList" maskClosable="true"></tui-fab>
   </view>
 </template>
 
@@ -316,6 +318,17 @@ export default {
           height: 64,
         },
       ],
+      btnList: [
+        {
+          bgColor: "#5677FC",
+          //名称
+          text: "发布",
+          //字体大小
+          fontSize: 28,
+          //字体颜色
+          color: "#fff",
+        },
+      ],
     };
   },
   onLoad: function (options) {
@@ -384,81 +397,6 @@ export default {
 </script>
 
 <style>
-.tui-container {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.tui-searchbox {
-  padding: 16rpx 20rpx;
-  box-sizing: border-box;
-  background-color: #f2f2f2;
-}
-
-.tui-rolling-search {
-  width: 100%;
-  height: 60rpx;
-  border-radius: 35rpx;
-  padding: 0 40rpx 0 30rpx;
-  box-sizing: border-box;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  color: #999;
-}
-
-.tui-swiper {
-  font-size: 26rpx;
-  height: 60rpx;
-  flex: 1;
-  padding-left: 12rpx;
-}
-
-.tui-swiper-item {
-  display: flex;
-  align-items: center;
-}
-
-.tui-hot-item {
-  line-height: 26rpx;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.tui-banner-swiper {
-  width: 100%;
-  height: 300rpx;
-  position: relative;
-}
-
-.tui-slide-image {
-  width: 100%;
-  height: 300rpx;
-  display: block;
-}
-
-.tui-banner-title {
-  width: 100%;
-  height: 100rpx;
-  position: absolute;
-  z-index: 9999;
-  color: #fff;
-  bottom: 0;
-  padding: 0 30rpx;
-  padding-top: 25rpx;
-  font-size: 34rpx;
-  font-weight: bold;
-  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
-  box-sizing: border-box;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 /* #ifdef MP-WEIXIN  */
 .tui-banner-swiper .wx-swiper-dots.wx-swiper-dots-horizontal {
   width: 100%;
@@ -526,175 +464,4 @@ export default {
 }
 
 /* #endif */
-
-.tui-news-flex {
-  width: 100%;
-  display: flex;
-}
-
-.tui-flex-start {
-  align-items: flex-start !important;
-}
-
-.tui-flex-center {
-  align-items: center !important;
-}
-
-.tui-flex-column {
-  flex-direction: column !important;
-}
-
-.tui-flex-between {
-  justify-content: space-between !important;
-}
-
-.tui-news-cell {
-  display: flex;
-  padding: 20rpx 30rpx;
-}
-
-.tui-news-tbox {
-  flex: 1;
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-}
-
-.tui-news-picbox {
-  display: flex;
-  position: relative;
-}
-
-.tui-w220 {
-  width: 220rpx;
-}
-
-.tui-h165 {
-  height: 165rpx;
-}
-
-.tui-block {
-  display: block;
-}
-
-.tui-w-full {
-  width: 100%;
-}
-
-.tui-one-third {
-  width: 33%;
-}
-
-.tui-news-title {
-  width: 100%;
-  font-size: 34rpx;
-  word-break: break-all;
-  word-wrap: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  box-sizing: border-box;
-}
-
-.tui-pl-20 {
-  padding-left: 20rpx;
-}
-
-.tui-pt20 {
-  padding-top: 20rpx;
-}
-
-.tui-sub-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #999;
-  box-sizing: border-box;
-  line-height: 24rpx;
-}
-
-.tui-sub-source {
-  font-size: 26rpx;
-}
-
-.tui-sub-cmt {
-  font-size: 24rpx;
-  line-height: 24rpx;
-  display: flex;
-  align-items: center;
-}
-
-.tui-scale {
-  transform: scale(0.6);
-  transform-origin: center center;
-}
-
-.tui-btm-badge {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  font-size: 24rpx;
-  color: #fff;
-  padding: 2rpx 12rpx;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 20;
-  transform: scale(0.8);
-  transform-origin: 100% 100%;
-}
-
-.tui-video {
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  transform-origin: 0 0;
-}
-
-.tui-icon {
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  padding: 26rpx;
-}
-
-.tui-header {
-  padding: 80rpx 60rpx;
-}
-
-.tui-title {
-  font-size: 36rpx;
-  color: #333;
-  font-weight: bold;
-}
-
-.tui-sub-title {
-  font-size: 28rpx;
-  color: #7a7a7a;
-  padding-top: 18rpx;
-}
-
-.tui-grid-icon {
-  width: 100%;
-  height: 64rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tui-grid-label {
-  margin-top: 10rpx;
-  display: block;
-  text-align: center;
-  font-weight: 400;
-  color: #333;
-  font-size: 20rpx;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 </style>

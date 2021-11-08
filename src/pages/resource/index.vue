@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-08 10:50:25
+ * @LastEditTime: 2021-11-08 10:58:19
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
@@ -18,7 +18,7 @@
         :itemWidth="100 / tabs.length + '%'"
       ></tui-tabs>
     </view>
-    <view style="margin-top: 28px;">
+    <view class="tab tab1" v-if="currentTab==0">
       <tui-grid>
         <block v-for="(item, index) in routers" v-if="index < 5" :key="index">
           <navigator :url="item.url" hover-class="none">
@@ -145,36 +145,24 @@ export default {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-.tui-title {
-  padding: 50rpx 30rpx 30rpx 30rpx;
-  font-size: 32rpx;
-  color: #333;
-  box-sizing: border-box;
-  font-weight: bold;
-  clear: both;
+.tab {
+  margin-top: 28px;
 }
 
-.tui-grid-icon {
-  width: 64rpx;
-  height: 64rpx;
-  margin: 0 auto;
-  text-align: center;
-  vertical-align: middle;
+.tab1 {
+  
 }
 
-.tui-grid-label {
-  display: block;
-  text-align: center;
-  font-weight: 400;
-  color: #333;
-  font-size: 20rpx;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-top: 10rpx;
+.tab2 {
+
 }
-.tui-grid-label-5 {
-  margin-top: 0 !important;
-  color: #8a5966 !important;
+
+.tab3 {
+
 }
+
+.tab4 {
+
+}
+
 </style>
