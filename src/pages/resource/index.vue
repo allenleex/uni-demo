@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-08 15:51:38
+ * @LastEditTime: 2021-11-08 17:04:17
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
@@ -40,6 +40,91 @@
           </navigator>
         </block>
       </tui-grid>
+      <view class="tui-searchbox">
+        <view class="tui-search-input" @tap="search">
+          <icon type="search" :size="15" color="#999"></icon>
+          <text class="tui-search-text">搜索</text>
+        </view>
+      </view>
+      <view
+        class="tui-list-cell tui-cell-last"
+        hover-class="tui-cell-hover"
+        :hover-start-time="150"
+        @tap="detail"
+      >
+        <image src="/static/images/news/2.jpg" class="tui-img"></image>
+        <view class="tui-name">新的朋友</view>
+      </view>
+      <!--searchbox-->
+      <!--联系人列表-->
+      <block v-for="(list, index) in lists" :key="index">
+        <tui-sticky
+          :recalc="1"
+          :scrollTop="scrollTop"
+          stickyHeight="66rpx"
+          :index="index"
+          @change="stickyChange"
+        >
+          <!--tips:sticky组件中最好不要嵌套其他自定义组件-->
+          <template v-slot:header>
+            <view class="tui-list-cell-divider">{{
+              list.letter == "well" ? "#" : list.letter
+            }}</view>
+          </template>
+          <template v-slot:content>
+            <view
+              class="tui-list-cell"
+              :class="{ 'tui-cell-last': last(list.data, index2) }"
+              hover-class="tui-cell-hover"
+              :hover-start-time="150"
+              @tap="detail"
+              v-for="(item, index2) in list.data"
+              :key="index2"
+            >
+              <image
+                :src="
+                  '/static/images/news/' +
+                  (index2 % 2 === 0 && index2 !== 0
+                    ? 'avatar_1.jpg'
+                    : 'avatar_2.jpg')
+                "
+                class="tui-img"
+              ></image>
+              <view class="tui-name">{{ item.name }}</view>
+            </view>
+          </template>
+        </tui-sticky>
+      </block>
+      <!--联系人列表-->
+      <view class="tui-footer" v-if="lists.length">120位联系人</view>
+      <view
+        class="tui-indexed-list-bar"
+        :style="{ height: indexBarHeight + 'px', marginTop: '81px' }"
+      >
+        <view
+          @touchstart.stop="touchStart"
+          @touchmove.stop.prevent="touchMove"
+          @touchend.stop="touchEnd"
+          @touchcancel.stop="touchCancel"
+          @tap="handleClick(index3)"
+          v-for="(items, index3) in lists"
+          :key="index3"
+          class="tui-indexed-list-text"
+          :style="{ height: indexBarItemHeight + 'px' }"
+        >
+          {{ items.letter == "well" ? "#" : items.letter }}
+        </view>
+      </view>
+      <view
+        class="tui-indexed-list-alert"
+        v-if="touchmove && lists[touchmoveIndex].letter"
+      >
+        <text>{{
+          lists[touchmoveIndex].letter == "well"
+            ? "#"
+            : lists[touchmoveIndex].letter
+        }}</text>
+      </view>
     </view>
 
     <view class="tab tab2" v-if="currentResourceTab == 2">
@@ -150,8 +235,16 @@
 </template>
 
 <script>
+import cityData from "@/utils/index.list.js";
 //注意：如果tabs数据动态传值:itemWidth="(100/tabs.length)+'%'"
 export default {
+  computed: {
+    last() {
+      return function (data, index) {
+        return data.length - 1 == index ? true : false;
+      };
+    },
+  },
   data() {
     return {
       currentResourceTab: 0,
@@ -227,18 +320,27 @@ export default {
         "宠物生活",
         "特产馆",
       ],
-			height: 0, //scroll-view高度
-			top: 0,
-			currentTab: 0, //预设当前项的值
-			scrollView_leftId: 'left_0',
-			scrollView_rightId: 'right_0',
-			scrollTop: 0,
-			distanceTop: uni.upx2px(92),
-			isScroll: true,
-			isTap: true
+      lists: [],
+      touchmove: false, // 是否在索引表上滑动
+      touchmoveIndex: -1,
+      titleHeight: 0, // A字距离窗口顶部的高度
+      indexBarHeight: 0, // 索引表高度
+      indexBarItemHeight: 0, // 索引表子项的高度
+      winHeight: 0,
+      scrollTop: 0,
+      height: 0, //scroll-view高度
+      top: 0,
+      currentTab: 0, //预设当前项的值
+      scrollView_leftId: "left_0",
+      scrollView_rightId: "right_0",
+      scrollTop: 0,
+      distanceTop: uni.upx2px(92),
+      isScroll: true,
+      isTap: true,
     };
   },
   onLoad: function (options) {
+    const that = this;
     setTimeout(() => {
       uni.getSystemInfo({
         success: (res) => {
@@ -249,6 +351,13 @@ export default {
           //#endif
           this.height = res.windowHeight - uni.upx2px(header);
           this.top = top + uni.upx2px(header);
+          let winHeight = res.windowHeight;
+          let barHeight = winHeight - uni.upx2px(232);
+          that.winHeight = winHeight;
+          that.indexBarHeight = barHeight - 44;
+          that.indexBarItemHeight = barHeight / 25;
+          that.titleHeight = uni.upx2px(132);
+          that.lists = cityData.list;
         },
       });
     }, 50);
@@ -257,58 +366,109 @@ export default {
     change(e) {
       this.currentResourceTab = e.index;
     },
-		swichNav: function(e) {
-			let cur = e.currentTarget.dataset.current;
-			if (this.currentTab == cur) {
-				return false;
-			} else {
-				this.currentTab = cur;
-				this.checkCor();
-			}
-		},
-		//判断当前滚动超过一屏时，设置tab标题滚动条。
-		checkCor: function(isScroll) {
-			if (!isScroll) {
-				this.isScroll = false;
-				this.isTap = true;
-				if (this.currentTab > 6) {
-					this.scrollView_leftId = `left_${this.currentTab - 2}`;
-				} else {
-					this.scrollView_leftId = `left_0`;
-				}
-				this.scrollView_rightId = `right_${this.currentTab}`;
-			} else {
-				this.scrollView_leftId = `left_${this.currentTab}`;
-			}
-		},
-		productList(e) {
-			let key = e.currentTarget.dataset.key;
-			uni.navigateTo({
-				url: '/pages/mall/productList/productList?searchKey=' + key
-			});
-		},
-		search: function() {
-			uni.navigateTo({
-				url: '/pages/opportunity/search/search'
-			});
-		},
-		scroll(e) {
-			//动画时长固定300ms
-			if (!this.isScroll) {
-				setTimeout(() => {
-					this.isScroll = true;
-				}, 150);
-			} else {
-				this.scrollTop = e.detail.scrollTop;
-			}
-		},
-		linkage(e) {
-			if (e.isLinkage && e.index != this.currentTab) {
-				this.isTap = false;
-				this.currentTab = e.index;
-				this.checkCor(true);
-			}
-		}
+    swichNav: function (e) {
+      let cur = e.currentTarget.dataset.current;
+      if (this.currentTab == cur) {
+        return false;
+      } else {
+        this.currentTab = cur;
+        this.checkCor();
+      }
+    },
+    //判断当前滚动超过一屏时，设置tab标题滚动条。
+    checkCor: function (isScroll) {
+      if (!isScroll) {
+        this.isScroll = false;
+        this.isTap = true;
+        if (this.currentTab > 6) {
+          this.scrollView_leftId = `left_${this.currentTab - 2}`;
+        } else {
+          this.scrollView_leftId = `left_0`;
+        }
+        this.scrollView_rightId = `right_${this.currentTab}`;
+      } else {
+        this.scrollView_leftId = `left_${this.currentTab}`;
+      }
+    },
+    productList(e) {
+      let key = e.currentTarget.dataset.key;
+      uni.navigateTo({
+        url: "/pages/mall/productList/productList?searchKey=" + key,
+      });
+    },
+    search: function () {
+      uni.navigateTo({
+        url: "/pages/opportunity/search/search",
+      });
+    },
+    scroll(e) {
+      //动画时长固定300ms
+      if (!this.isScroll) {
+        setTimeout(() => {
+          this.isScroll = true;
+        }, 150);
+      } else {
+        this.scrollTop = e.detail.scrollTop;
+      }
+    },
+    linkage(e) {
+      if (e.isLinkage && e.index != this.currentTab) {
+        this.isTap = false;
+        this.currentTab = e.index;
+        this.checkCor(true);
+      }
+    },
+    touchStart(e) {
+      this.touchmove = true;
+      let pageY = e.changedTouches[0].pageY - this.scrollTop;
+      let index = Math.floor(
+        (pageY - this.titleHeight) / this.indexBarItemHeight
+      );
+      let item = this.lists[index];
+      if (item) {
+        this.touchmoveIndex = index;
+      }
+    },
+    touchMove(e) {
+      let pageY = e.changedTouches[0].pageY - this.scrollTop;
+      let index = Math.floor(
+        (pageY - this.titleHeight) / this.indexBarItemHeight
+      );
+      let item = this.lists[index];
+      if (item) {
+        this.touchmoveIndex = index;
+      }
+    },
+    touchEnd() {
+      this.touchmove = false;
+      this.touchmoveIndex = -1;
+    },
+    touchCancel() {
+      this.touchmove = false;
+      this.touchmoveIndex = -1;
+    },
+    handleClick(index) {
+      if (index === undefined || this.touchmove) return;
+      let item = this.lists[index];
+      if (item) {
+        this.touchmoveIndex = index;
+      }
+    },
+    stickyChange: function (e) {
+      let index = e.index;
+      this.lists[index].stickyTop = e.top;
+    },
+    search: function () {
+      uni.navigateTo({
+        url: "../../news/search/search",
+      });
+    },
+    detail: function () {
+      console.log("------ chat");
+      uni.navigateTo({
+        url: "../chat/chat/chat",
+      });
+    },
   },
 };
 </script>
@@ -360,141 +520,141 @@ export default {
 }
 
 .tui-searchbox {
-	width: 100%;
-	height: 92rpx;
-	padding: 0 30rpx;
-	box-sizing: border-box;
-	background-color: #fff;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: fixed;
-	left: 0;
-	top: 0;
-	/* #ifdef H5 */
-	top: 44px;
-	/* #endif */
-	z-index: 100;
+  width: 100%;
+  height: 92rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  /* #ifdef H5 */
+  top: 44px;
+  /* #endif */
+  z-index: 100;
 }
 
 .tui-searchbox::after {
-	content: '';
-	position: absolute;
-	border-bottom: 1rpx solid #d2d2d2;
-	-webkit-transform: scaleY(0.5);
-	transform: scaleY(0.5);
-	bottom: 0;
-	right: 0;
-	left: 0;
+  content: "";
+  position: absolute;
+  border-bottom: 1rpx solid #d2d2d2;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 
 .tui-search-input {
-	width: 100%;
-	height: 60rpx;
-	background: #f1f1f1;
-	border-radius: 30rpx;
-	font-size: 26rpx;
-	color: #999;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  width: 100%;
+  height: 60rpx;
+  background: #f1f1f1;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tui-search-text {
-	padding-left: 16rpx;
+  padding-left: 16rpx;
 }
 
 .tab-view {
-	/* height: 100%; */
-	width: 200rpx;
-	position: fixed;
-	left: 0;
-	z-index: 10;
+  /* height: 100%; */
+  width: 200rpx;
+  position: fixed;
+  left: 0;
+  z-index: 10;
 }
 
 .tab-bar-item {
-	width: 200rpx;
-	height: 110rpx;
-	background: #f6f6f6;
-	box-sizing: border-box;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 26rpx;
-	color: #444;
-	font-weight: 400;
+  width: 200rpx;
+  height: 110rpx;
+  background: #f6f6f6;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: #444;
+  font-weight: 400;
 }
 
 .active {
-	position: relative;
-	color: #000;
-	font-size: 30rpx;
-	font-weight: 600;
-	background: #fcfcfc;
+  position: relative;
+  color: #000;
+  font-size: 30rpx;
+  font-weight: 600;
+  background: #fcfcfc;
 }
 
 .active::before {
-	content: '';
-	position: absolute;
-	border-left: 8rpx solid #e41f19;
-	height: 30rpx;
-	left: 0;
+  content: "";
+  position: absolute;
+  border-left: 8rpx solid #e41f19;
+  height: 30rpx;
+  left: 0;
 }
 
 /* 左侧导航布局 end*/
 
 .right-box {
-	width: 100%;
-	position: fixed;
-	padding-left: 220rpx;
-	box-sizing: border-box;
-	left: 0;
+  width: 100%;
+  position: fixed;
+  padding-left: 220rpx;
+  box-sizing: border-box;
+  left: 0;
 }
 
 .page-view {
-	width: 100%;
-	overflow: hidden;
-	padding-top: 20rpx;
-	padding-right: 20rpx;
-	box-sizing: border-box;
-	padding-bottom: env(safe-area-inset-bottom);
+  width: 100%;
+  overflow: hidden;
+  padding-top: 20rpx;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .class-item {
-	background: #fff;
-	width: 100%;
-	box-sizing: border-box;
-	padding: 20rpx;
-	margin-bottom: 20rpx;
-	border-radius: 12rpx;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  border-radius: 12rpx;
 }
 
 .class-name {
-	font-size: 26rpx;
-	font-weight: bold;
+  font-size: 26rpx;
+  font-weight: bold;
 }
 
 .g-container {
-	/* padding-top: 20rpx; */
-	display: flex;
-	display: -webkit-flex;
-	justify-content: flex-start;
-	flex-direction: row;
-	flex-wrap: wrap;
+  /* padding-top: 20rpx; */
+  display: flex;
+  display: -webkit-flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .g-box {
-	width: 33.3333%;
-	text-align: center;
-	padding-top: 40rpx;
+  width: 33.3333%;
+  text-align: center;
+  padding-top: 40rpx;
 }
 
 .g-image {
-	width: 120rpx;
-	height: 120rpx;
+  width: 120rpx;
+  height: 120rpx;
 }
 
 .g-title {
-	font-size: 22rpx;
+  font-size: 22rpx;
 }
 </style>
