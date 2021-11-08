@@ -1,674 +1,700 @@
 <template>
-	<view class="tui-container">
-		<view class="tui-searchbox">
-			<view class="tui-rolling-search">
-				<icon type="search" :size='13' color='#999'></icon>
-				<swiper vertical autoplay circular interval="8000" class="tui-swiper">
-					<swiper-item v-for="(item,index) in hotSearch" :key="index" class="tui-swiper-item" @tap="search">
-						<view class="tui-hot-item">大家正在搜：{{item}}</view>
-					</swiper-item>
-				</swiper>
-			</view>
-		</view>
-		<!--banner-->
-		<swiper indicator-dots autoplay circular :interval="5000" :duration="150" indicator-color="rgba(255, 255, 255, 0.9)"
-		 indicator-active-color="#5677fc" class="tui-banner-swiper">
-			<swiper-item v-for="(item,index) in banner" :key="index" @tap.stop="bannerDetail">
-				<view class="tui-banner-title">{{item.title}}</view>
-				<image :src="'/static/images/news/'+item.img" class="tui-slide-image" mode="widthFix" />
-			</swiper-item>
-		</swiper>
+  <view class="tui-container">
+    <view class="tui-searchbox">
+      <view class="tui-rolling-search">
+        <icon type="search" :size="13" color="#999"></icon>
+        <swiper vertical autoplay circular interval="8000" class="tui-swiper">
+          <swiper-item
+            v-for="(item, index) in hotSearch"
+            :key="index"
+            class="tui-swiper-item"
+            @tap="search"
+          >
+            <view class="tui-hot-item">大家正在搜：{{ item }}</view>
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>
+    <!--banner-->
+    <swiper
+      indicator-dots
+      autoplay
+      circular
+      :interval="5000"
+      :duration="150"
+      indicator-color="rgba(255, 255, 255, 0.9)"
+      indicator-active-color="#5677fc"
+      class="tui-banner-swiper"
+    >
+      <swiper-item
+        v-for="(item, index) in banner"
+        :key="index"
+        @tap.stop="bannerDetail"
+      >
+        <view class="tui-banner-title">{{ item.title }}</view>
+        <image
+          :src="'/static/images/news/' + item.img"
+          class="tui-slide-image"
+          mode="widthFix"
+        />
+      </swiper-item>
+    </swiper>
 
-		<tui-grid>
-			<block v-for="(item,index) in routers" v-if="index < 5" :key="index">
-				<navigator :url="item.url" hover-class='none'>
-					<tui-grid-item :cell="5">
-						<view class="tui-grid-icon">
-							<image class="tui-grid-img" :src="'https://thorui.cn/images/basic/'+item.img+'.png'" :style="{width:item.width+'rpx',height:item.height+'rpx'}" />
-						</view>
-						<text class="tui-grid-label">{{item.name}}</text>
-					</tui-grid-item>
-				</navigator>
-			</block>
-		</tui-grid>
-		<!-- <tui-grid>
-			<block v-for="(item,index) in iconList" :key="index">
-				<tui-grid-item :cell="5" @click="detail">
-					<view class="tui-grid-icon">
-						<tui-icon :name="item.name" :size="item.size" color="#8a5966"></tui-icon>
-					</view> 
-					<text class="tui-grid-label tui-grid-label-5">{{item.name}}</text>
-				</tui-grid-item>
-			</block>
-		</tui-grid> -->
+    <tui-grid>
+      <block v-for="(item, index) in routers" :key="index">
+        <navigator :url="item.url" hover-class="none">
+          <tui-grid-item :cell="5">
+            <view class="tui-grid-icon">
+                <!-- <image
+                  class="tui-grid-img"
+                  :src="'https://thorui.cn/images/basic/' + item.img + '.png'"
+                  :style="{
+                    width: item.width + 'rpx',
+                    height: item.height + 'rpx',
+                  }"
+                /> -->
+                <text class="tui-grid-item-value">###</text>
+            </view>
+            <text class="tui-grid-label">{{ item.name }}</text>
+          </tui-grid-item>
+        </navigator>
+      </block>
+    </tui-grid>
 
-		<!--新闻列表-->
-		<view class="tui-news-view">
-			<block v-for="(item,index) in newsList" :key="index">
-				<tui-list-cell :index="index" @click="detail" :unlined="count==index">
-					<view class="tui-news-flex" :class="[item.isVideo || item.imgNum>1 ?  'tui-flex-column':'tui-flex-start']">
-						<view class="tui-news-picbox" :class="[item.isVideo || item.imgNum>1?'tui-w-full':'tui-w220 tui-h165',item.imgNum>1?'tui-flex-between':'']"
-						 v-if="item.imgNum>0">
-							<block v-for="(items,index2) in item.img" :key="index2">
-								<image :src="'/static/images/news/'+items" mode="widthFix" class="tui-block" :class="[item.imgNum>1?'tui-one-third':'',item.isVideo?'tui-w-full':'']"></image>
-							</block>
-							<view class="tui-btm-badge" v-if="item.isVideo || item.imgNum>3">{{item.isVideo?item.time:item.imgNum+'图'}}</view>
-							<view class="tui-video" v-if="item.isVideo">
-								<tui-icon name="play" color="#fff" :size="24"></tui-icon>
-							</view>
-						</view>
-						<view class="tui-news-tbox tui-flex-column tui-flex-between" :class="[item.imgNum===1 && !item.isVideo?'tui-h165 tui-pl-20':'']">
-							<view class="tui-news-title" :class="[(!item.isVideo && item.imgNum===1)|| item.imgNum===0?'':'tui-pt20']">{{item.title}}</view>
-							<view class="tui-sub-box" :class="[!item.isVideo && item.imgNum===1?'':'tui-pt20']">
-								<view class="tui-sub-source">{{item.source}}</view>
-								<view class="tui-sub-cmt">
-									<view>{{item.cmtsNum}}评论</view>
-									<view class="tui-scale">
-										<tui-tag padding="10rpx 24rpx"  :plain="true" shape="circleRight" v-if="item.isTop">置顶</tui-tag>
-									</view>
-								</view>
-							</view>
-						</view>
-					</view>
-				</tui-list-cell>
-			</block>
-
-		</view>
-		<tui-tips ref="toast"></tui-tips>
-		<!--加载loadding-->
-		<tui-loadmore v-if="loadding" :index="3" type="primary"></tui-loadmore>
-		<tui-nomore v-if="!pullUpOn" ></tui-nomore>
-		<!--加载loadding-->
-	</view>
+    <!--新闻列表-->
+    <view class="tui-news-view">
+      <block v-for="(item, index) in newsList" :key="index">
+        <tui-list-cell :index="index" @click="detail" :unlined="count == index">
+          <view
+            class="tui-news-flex"
+            :class="[
+              item.isVideo || item.imgNum > 1
+                ? 'tui-flex-column'
+                : 'tui-flex-start',
+            ]"
+          >
+            <view
+              class="tui-news-picbox"
+              :class="[
+                item.isVideo || item.imgNum > 1
+                  ? 'tui-w-full'
+                  : 'tui-w220 tui-h165',
+                item.imgNum > 1 ? 'tui-flex-between' : '',
+              ]"
+              v-if="item.imgNum > 0"
+            >
+              <block v-for="(items, index2) in item.img" :key="index2">
+                <image
+                  :src="'/static/images/news/' + items"
+                  mode="widthFix"
+                  class="tui-block"
+                  :class="[
+                    item.imgNum > 1 ? 'tui-one-third' : '',
+                    item.isVideo ? 'tui-w-full' : '',
+                  ]"
+                ></image>
+              </block>
+              <view
+                class="tui-btm-badge"
+                v-if="item.isVideo || item.imgNum > 3"
+                >{{ item.isVideo ? item.time : item.imgNum + "图" }}</view
+              >
+              <view class="tui-video" v-if="item.isVideo">
+                <tui-icon name="play" color="#fff" :size="24"></tui-icon>
+              </view>
+            </view>
+            <view
+              class="tui-news-tbox tui-flex-column tui-flex-between"
+              :class="[
+                item.imgNum === 1 && !item.isVideo ? 'tui-h165 tui-pl-20' : '',
+              ]"
+            >
+              <view
+                class="tui-news-title"
+                :class="[
+                  (!item.isVideo && item.imgNum === 1) || item.imgNum === 0
+                    ? ''
+                    : 'tui-pt20',
+                ]"
+                >{{ item.title }}</view
+              >
+              <view
+                class="tui-sub-box"
+                :class="[!item.isVideo && item.imgNum === 1 ? '' : 'tui-pt20']"
+              >
+                <view class="tui-sub-source">{{ item.source }}</view>
+                <view class="tui-sub-cmt">
+                  <view>{{ item.cmtsNum }}评论</view>
+                  <view class="tui-scale">
+                    <tui-tag
+                      padding="10rpx 24rpx"
+                      :plain="true"
+                      shape="circleRight"
+                      v-if="item.isTop"
+                      >置顶</tui-tag
+                    >
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </tui-list-cell>
+      </block>
+    </view>
+    <tui-tips ref="toast"></tui-tips>
+    <!--加载loadding-->
+    <tui-loadmore v-if="loadding" :index="3" type="primary"></tui-loadmore>
+    <tui-nomore v-if="!pullUpOn"></tui-nomore>
+    <!--加载loadding-->
+  </view>
 </template>
 
 <script>
-	export default {
-		computed: {
-			count() {
-				return this.newsList.length - 1
-			}
-		},
-		data() {
-			return {
-				hotSearch: [
-					"早安D站",
-					"2019退役球星",
-					"卡拉斯科"
-				],
-				banner: [{
-					img: "banner_1.jpg",
-					title: "山东官方：德尔加多已完成全部手续办理，具备上场比赛资格"
-				}, {
-					img: "banner_2.jpg",
-					title: "这个世界上，或许没有真正的托黑"
-				}, {
-					img: "banner_3.jpg",
-					title: "金童再见！西班牙前锋托雷斯宣布退役"
-				}],
-				newsList: [],
-				dataSources: [{
-					title: "卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题",
-					source: "手机中国网",
-					cmtsNum: 2019,
-					isTop: true,
-					isVideo: false,
-					time: "00:00",
-					img: ["list_1.jpg"],
-					imgNum: 1
-				}, {
-					title: "荷兰媒体：德利赫特接近加盟尤文，转会费7000万，年薪2000万",
-					source: "央视网新闻",
-					cmtsNum: 3620,
-					isTop: true,
-					isVideo: false,
-					time: "00:00",
-					img: ["list_2.jpg"],
-					imgNum: 1
-				}, {
-					title: "申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效",
-					source: "体坛大精汇",
-					cmtsNum: 5230,
-					isTop: true,
-					isVideo: false,
-					time: "00:00",
-					img: [],
-					imgNum: 0
-				}, {
-					title: "卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题",
-					source: "体坛大精汇",
-					cmtsNum: 7690,
-					isTop: true,
-					isVideo: false,
-					time: "00:00",
-					img: ["list_3.jpg", "list_2.jpg", "list_1.jpg"],
-					imgNum: 20
-				}, {
-					title: "敲锣鼓、放鞭炮！本周国际赛事MVP提名揭晓",
-					source: "体坛大精汇",
-					cmtsNum: 2019,
-					isTop: true,
-					isVideo: false,
-					time: "00:00",
-					img: ["list_3.jpg"],
-					imgNum: 1
-				}, {
-					title: "申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效",
-					source: "手机中国网",
-					cmtsNum: 2019,
-					isTop: true,
-					isVideo: false,
-					time: "00:00",
-					img: ["list_4.jpg"],
-					imgNum: 1
-				}, {
-					title: "荷兰媒体：德利赫特接近加盟尤文，转会费7000万，年薪2000万",
-					source: "手机中国网",
-					cmtsNum: 2019,
-					isTop: true,
-					isVideo: true,
-					time: "00:58",
-					img: ["banner_2.jpg"],
-					imgNum: 1
-				}, {
-					title: "敲锣鼓、放鞭炮！本周国际赛事MVP提名揭晓",
-					source: "体坛大精汇",
-					cmtsNum: 5230,
-					isTop: true,
-					isVideo: false,
-					time: "00:00",
-					img: [],
-					imgNum: 0
-				}, {
-					title: "卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题",
-					source: "体坛大精汇",
-					cmtsNum: 7690,
-					isTop: true,
-					isVideo: false,
-					time: "00:00",
-					img: ["list_3.jpg", "list_2.jpg", "list_4.jpg"],
-					imgNum: 8
-				}, {
-					title: "申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效",
-					source: "手机中国网",
-					cmtsNum: 2019,
-					isTop: true,
-					isVideo: true,
-					time: "00:49",
-					img: ["banner_1.jpg"],
-					imgNum: 1
-				}],
-				pageIndex: 1,
-				loadding: false,
-				pullUpOn: true,
-				routers: [{
-						name: 'Color 色彩',
-						url: '/pages/index/color/color',
-						img: "color",
-						width: 74,
-						height: 74
-					},
-					{
-						name: 'Flex 布局',
-						url: '/pages/index/flex/flex',
-						img: "flex",
-						width: 60,
-						height: 60
-					},
-					{
-						name: 'Icon 图标',
-						url: '/pages/extend/icon/icon',
-						img: "icon",
-						width: 56,
-						height: 56
-					},
-					{
-						name: 'Button 按钮',
-						url: '/pages/extend/button/button',
-						img: "button",
-						width: 64,
-						height: 64
-					},
-					{
-						name: 'Tag 标签',
-						url: '/pages/extend/tag/tag',
-						img: "tag",
-						width: 64,
-						height: 64
-					},
-					{
-						name: 'Badge 徽章',
-						url: '/pages/extend/badge/badge',
-						img: "badge",
-						width: 58,
-						height: 58
-					},
-					{
-						name: 'List 列表',
-						url: '/pages/extend/list/list',
-						img: "list",
-						width: 64,
-						height: 64
-					},
-					{
-						name: 'Card 卡片',
-						url: '/pages/extend/card/card',
-						img: "card",
-						width: 68,
-						height: 68
-					},
-					{
-						name: 'Grid 宫格',
-						url: '/pages/extend/grid/grid',
-						img: "grid",
-						width: 48,
-						height: 48
-					},
-					{
-						name: 'Loading 加载',
-						url: '/pages/extend/loading/loading',
-						img: "loading",
-						width: 74,
-						height: 48
-					},
-					{
-						name: 'Footer 页脚',
-						url: '/pages/extend/footer/footer',
-						img: "footer",
-						width: 64,
-						height: 58
-					},
-					{
-						name: 'Layout 布局',
-						url: '/pages/index/layout/layout',
-						img: "layout",
-						width: 64,
-						height: 50
-					}
-				]
-			}
-		},
-		onLoad: function(options) {
-			this.newsList = this.dataSources
-		},
-		methods: {
-			search: function() {
-				uni.navigateTo({
-					url: '../search/search'
-				})
-			},
-			bannerDetail: function() {
-				uni.navigateTo({
-					url: '../newsDetail/newsDetail'
-				})
-			},
-			detail(e) {
-				console.log("-------- detail");
-				let index = e.index;
-				let url = "../newsDetail/newsDetail";
-				if (this.newsList[index].isVideo) {
-					url = "../newsVideo/newsVideo";
-				}
-				uni.navigateTo({
-					url: url
-				})
-			}
-		},
-		//页面相关事件处理函数--监听用户下拉动作
-		onPullDownRefresh: function() {
-			this.newsList = this.dataSources;
-			this.pageIndex = 1;
-			this.pullUpOn = true;
-			this.loadding = false;
-			uni.stopPullDownRefresh();
-			let options = {
-				msg: "刷新成功，为你更新了10条数据",
-				duration: 2000,
-				type: "translucent"
-			};
-			setTimeout(() => {
-				this.$refs.toast.showTips(options);
-			}, 300);
-		},
+export default {
+  computed: {
+    count() {
+      return this.newsList.length - 1;
+    },
+  },
+  data() {
+    return {
+      hotSearch: ["早安D站", "2019退役球星", "卡拉斯科"],
+      banner: [
+        {
+          img: "banner_1.jpg",
+          title: "山东官方：德尔加多已完成全部手续办理，具备上场比赛资格",
+        },
+        {
+          img: "banner_2.jpg",
+          title: "这个世界上，或许没有真正的托黑",
+        },
+        {
+          img: "banner_3.jpg",
+          title: "金童再见！西班牙前锋托雷斯宣布退役",
+        },
+      ],
+      newsList: [],
+      dataSources: [
+        {
+          title: "卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题",
+          source: "手机中国网",
+          cmtsNum: 2019,
+          isTop: true,
+          isVideo: false,
+          time: "00:00",
+          img: ["list_1.jpg"],
+          imgNum: 1,
+        },
+        {
+          title: "荷兰媒体：德利赫特接近加盟尤文，转会费7000万，年薪2000万",
+          source: "央视网新闻",
+          cmtsNum: 3620,
+          isTop: true,
+          isVideo: false,
+          time: "00:00",
+          img: ["list_2.jpg"],
+          imgNum: 1,
+        },
+        {
+          title: "申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效",
+          source: "体坛大精汇",
+          cmtsNum: 5230,
+          isTop: true,
+          isVideo: false,
+          time: "00:00",
+          img: [],
+          imgNum: 0,
+        },
+        {
+          title: "卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题",
+          source: "体坛大精汇",
+          cmtsNum: 7690,
+          isTop: true,
+          isVideo: false,
+          time: "00:00",
+          img: ["list_3.jpg", "list_2.jpg", "list_1.jpg"],
+          imgNum: 20,
+        },
+        {
+          title: "敲锣鼓、放鞭炮！本周国际赛事MVP提名揭晓",
+          source: "体坛大精汇",
+          cmtsNum: 2019,
+          isTop: true,
+          isVideo: false,
+          time: "00:00",
+          img: ["list_3.jpg"],
+          imgNum: 1,
+        },
+        {
+          title: "申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效",
+          source: "手机中国网",
+          cmtsNum: 2019,
+          isTop: true,
+          isVideo: false,
+          time: "00:00",
+          img: ["list_4.jpg"],
+          imgNum: 1,
+        },
+        {
+          title: "荷兰媒体：德利赫特接近加盟尤文，转会费7000万，年薪2000万",
+          source: "手机中国网",
+          cmtsNum: 2019,
+          isTop: true,
+          isVideo: true,
+          time: "00:58",
+          img: ["banner_2.jpg"],
+          imgNum: 1,
+        },
+        {
+          title: "敲锣鼓、放鞭炮！本周国际赛事MVP提名揭晓",
+          source: "体坛大精汇",
+          cmtsNum: 5230,
+          isTop: true,
+          isVideo: false,
+          time: "00:00",
+          img: [],
+          imgNum: 0,
+        },
+        {
+          title: "卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题",
+          source: "体坛大精汇",
+          cmtsNum: 7690,
+          isTop: true,
+          isVideo: false,
+          time: "00:00",
+          img: ["list_3.jpg", "list_2.jpg", "list_4.jpg"],
+          imgNum: 8,
+        },
+        {
+          title: "申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效",
+          source: "手机中国网",
+          cmtsNum: 2019,
+          isTop: true,
+          isVideo: true,
+          time: "00:49",
+          img: ["banner_1.jpg"],
+          imgNum: 1,
+        },
+      ],
+      pageIndex: 1,
+      loadding: false,
+      pullUpOn: true,
+      routers: [
+        {
+          name: "指标名称",
+          url: "",
+          img: "color",
+          width: 74,
+          height: 74,
+        },
+        {
+          name: "指标名称",
+          url: "",
+          img: "flex",
+          width: 60,
+          height: 60,
+        },
+        {
+          name: "指标名称",
+          url: "",
+          img: "icon",
+          width: 56,
+          height: 56,
+        },
+        {
+          name: "指标名称",
+          url: "",
+          img: "button",
+          width: 64,
+          height: 64,
+        },
+        {
+          name: "指标名称",
+          url: "",
+          img: "tag",
+          width: 64,
+          height: 64,
+        },
+      ],
+    };
+  },
+  onLoad: function (options) {
+    this.newsList = this.dataSources;
+  },
+  methods: {
+    search: function () {
+      uni.navigateTo({
+        url: "../search/search",
+      });
+    },
+    bannerDetail: function () {
+      uni.navigateTo({
+        url: "../newsDetail/newsDetail",
+      });
+    },
+    detail(e) {
+      console.log("-------- detail");
+      let index = e.index;
+      let url = "../newsDetail/newsDetail";
+      if (this.newsList[index].isVideo) {
+        url = "../newsVideo/newsVideo";
+      }
+      uni.navigateTo({
+        url: url,
+      });
+    },
+  },
+  //页面相关事件处理函数--监听用户下拉动作
+  onPullDownRefresh: function () {
+    this.newsList = this.dataSources;
+    this.pageIndex = 1;
+    this.pullUpOn = true;
+    this.loadding = false;
+    uni.stopPullDownRefresh();
+    let options = {
+      msg: "刷新成功，为你更新了10条数据",
+      duration: 2000,
+      type: "translucent",
+    };
+    setTimeout(() => {
+      this.$refs.toast.showTips(options);
+    }, 300);
+  },
 
-		// 页面上拉触底事件的处理函数
-		onReachBottom: function() {
-			if (!this.pullUpOn) return;
-			this.loadding = true;
-			if (this.pageIndex == 3) {
-				this.loadding = false;
-				this.pullUpOn = false
-			} else {
-				let arr = JSON.parse(JSON.stringify(this.dataSources));
-				if (this.pageIndex >= 1) {
-					for (let item of arr) {
-						item.isTop = false;
-					}
-				}
-				this.newsList = this.newsList.concat(arr);
-				this.pageIndex = this.pageIndex + 1;
-				this.loadding = false
-			}
-		}
-	}
+  // 页面上拉触底事件的处理函数
+  onReachBottom: function () {
+    if (!this.pullUpOn) return;
+    this.loadding = true;
+    if (this.pageIndex == 3) {
+      this.loadding = false;
+      this.pullUpOn = false;
+    } else {
+      let arr = JSON.parse(JSON.stringify(this.dataSources));
+      if (this.pageIndex >= 1) {
+        for (let item of arr) {
+          item.isTop = false;
+        }
+      }
+      this.newsList = this.newsList.concat(arr);
+      this.pageIndex = this.pageIndex + 1;
+      this.loadding = false;
+    }
+  },
+};
 </script>
 
 <style>
+.tui-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom);
+}
 
+.tui-searchbox {
+  padding: 16rpx 20rpx;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+}
 
-	.tui-container {
-		display: flex;
-		flex-direction: column;
-		box-sizing: border-box;
-		padding-bottom: env(safe-area-inset-bottom);
-	}
+.tui-rolling-search {
+  width: 100%;
+  height: 60rpx;
+  border-radius: 35rpx;
+  padding: 0 40rpx 0 30rpx;
+  box-sizing: border-box;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  color: #999;
+}
 
-	.tui-searchbox {
-		padding: 16rpx 20rpx;
-		box-sizing: border-box;
-		background-color: #F2F2F2;
-	}
+.tui-swiper {
+  font-size: 26rpx;
+  height: 60rpx;
+  flex: 1;
+  padding-left: 12rpx;
+}
 
-	.tui-rolling-search {
-		width: 100%;
-		height: 60rpx;
-		border-radius: 35rpx;
-		padding: 0 40rpx 0 30rpx;
-		box-sizing: border-box;
-		background: #fff;
-		display: flex;
-		align-items: center;
-		flex-wrap: nowrap;
-		color: #999;
-	}
+.tui-swiper-item {
+  display: flex;
+  align-items: center;
+}
 
-	.tui-swiper {
-		font-size: 26rpx;
-		height: 60rpx;
-		flex: 1;
-		padding-left: 12rpx;
-	}
+.tui-hot-item {
+  line-height: 26rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-	.tui-swiper-item {
-		display: flex;
-		align-items: center;
-	}
+.tui-banner-swiper {
+  width: 100%;
+  height: 300rpx;
+  position: relative;
+}
 
-	.tui-hot-item {
-		line-height: 26rpx;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+.tui-slide-image {
+  width: 100%;
+  height: 300rpx;
+  display: block;
+}
 
-	.tui-banner-swiper {
-		width: 100%;
-		height: 300rpx;
-		position: relative;
-	}
+.tui-banner-title {
+  width: 100%;
+  height: 100rpx;
+  position: absolute;
+  z-index: 9999;
+  color: #fff;
+  bottom: 0;
+  padding: 0 30rpx;
+  padding-top: 25rpx;
+  font-size: 34rpx;
+  font-weight: bold;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-	.tui-slide-image {
-		width: 100%;
-		height: 300rpx;
-		display: block;
-	}
+/* #ifdef MP-WEIXIN  */
+.tui-banner-swiper .wx-swiper-dots.wx-swiper-dots-horizontal {
+  width: 100%;
+  top: 280rpx;
+  text-align: right;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+}
 
-	.tui-banner-title {
-		width: 100%;
-		height: 100rpx;
-		position: absolute;
-		z-index: 9999;
-		color: #fff;
-		bottom: 0;
-		padding: 0 30rpx;
-		padding-top: 25rpx;
-		font-size: 34rpx;
-		font-weight: bold;
-		background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
-		box-sizing: border-box;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+.tui-banner-swiper .wx-swiper-dot {
+  width: 8rpx;
+  height: 8rpx;
+  display: inline-flex;
+  background: none;
+  justify-content: space-between;
+}
 
-	/* #ifdef MP-WEIXIN  */
-	.tui-banner-swiper .wx-swiper-dots.wx-swiper-dots-horizontal {
-		width: 100%;
-		top: 280rpx;
-		text-align: right;
-		padding-right: 30rpx;
-		box-sizing: border-box;
-	}
+.tui-banner-swiper .wx-swiper-dot::before {
+  content: "";
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8rpx;
+}
 
-	.tui-banner-swiper .wx-swiper-dot {
-		width: 8rpx;
-		height: 8rpx;
-		display: inline-flex;
-		background: none;
-		justify-content: space-between;
-	}
+.tui-banner-swiper .wx-swiper-dot-active::before {
+  background: #5677fc;
+}
 
-	.tui-banner-swiper .wx-swiper-dot::before {
-		content: '';
-		flex-grow: 1;
-		background: rgba(255, 255, 255, 0.9);
-		border-radius: 8rpx;
-	}
+.tui-banner-swiper .wx-swiper-dot.wx-swiper-dot-active {
+  width: 18rpx;
+}
 
-	.tui-banner-swiper .wx-swiper-dot-active::before {
-		background: #5677fc;
-	}
+/* #endif */
 
-	.tui-banner-swiper .wx-swiper-dot.wx-swiper-dot-active {
-		width: 18rpx;
-	}
+/* #ifndef MP-WEIXIN */
+>>> .tui-banner-swiper .uni-swiper-dots.uni-swiper-dots-horizontal {
+  width: 100%;
+  top: 280rpx;
+  text-align: right;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+}
 
-	/* #endif */
+>>> .tui-banner-swiper .uni-swiper-dot {
+  width: 8rpx;
+  height: 8rpx;
+  display: inline-flex;
+  background: none;
+  justify-content: space-between;
+}
 
-	/* #ifndef MP-WEIXIN */
-	>>>.tui-banner-swiper .uni-swiper-dots.uni-swiper-dots-horizontal {
-		width: 100%;
-		top: 280rpx;
-		text-align: right;
-		padding-right: 30rpx;
-		box-sizing: border-box;
-	}
+>>> .tui-banner-swiper .uni-swiper-dot::before {
+  content: "";
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8rpx;
+}
 
-	>>>.tui-banner-swiper .uni-swiper-dot {
-		width: 8rpx;
-		height: 8rpx;
-		display: inline-flex;
-		background: none;
-		justify-content: space-between;
-	}
+>>> .tui-banner-swiper .uni-swiper-dot-active::before {
+  background: #5677fc;
+}
 
-	>>>.tui-banner-swiper .uni-swiper-dot::before {
-		content: '';
-		flex-grow: 1;
-		background: rgba(255, 255, 255, 0.9);
-		border-radius: 8rpx;
-	}
+>>> .tui-banner-swiper .uni-swiper-dot.uni-swiper-dot-active {
+  width: 18rpx;
+}
 
-	>>>.tui-banner-swiper .uni-swiper-dot-active::before {
-		background: #5677fc;
-	}
+/* #endif */
 
-	>>>.tui-banner-swiper .uni-swiper-dot.uni-swiper-dot-active {
-		width: 18rpx;
-	}
+.tui-news-flex {
+  width: 100%;
+  display: flex;
+}
 
-	/* #endif */
+.tui-flex-start {
+  align-items: flex-start !important;
+}
 
-	.tui-news-flex {
-		width: 100%;
-		display: flex;
-	}
+.tui-flex-center {
+  align-items: center !important;
+}
 
-	.tui-flex-start {
-		align-items: flex-start !important;
-	}
+.tui-flex-column {
+  flex-direction: column !important;
+}
 
-	.tui-flex-center {
-		align-items: center !important;
-	}
+.tui-flex-between {
+  justify-content: space-between !important;
+}
 
-	.tui-flex-column {
-		flex-direction: column !important;
-	}
+.tui-news-cell {
+  display: flex;
+  padding: 20rpx 30rpx;
+}
 
-	.tui-flex-between {
-		justify-content: space-between !important;
-	}
+.tui-news-tbox {
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+}
 
-	.tui-news-cell {
-		display: flex;
-		padding: 20rpx 30rpx;
-	}
+.tui-news-picbox {
+  display: flex;
+  position: relative;
+}
 
-	.tui-news-tbox {
-		flex: 1;
-		width: 100%;
-		box-sizing: border-box;
-		display: flex;
-	}
+.tui-w220 {
+  width: 220rpx;
+}
 
-	.tui-news-picbox {
-		display: flex;
-		position: relative;
-	}
+.tui-h165 {
+  height: 165rpx;
+}
 
-	.tui-w220 {
-		width: 220rpx;
-	}
+.tui-block {
+  display: block;
+}
 
-	.tui-h165 {
-		height: 165rpx;
-	}
+.tui-w-full {
+  width: 100%;
+}
 
-	.tui-block {
-		display: block;
-	}
+.tui-one-third {
+  width: 33%;
+}
 
-	.tui-w-full {
-		width: 100%;
-	}
+.tui-news-title {
+  width: 100%;
+  font-size: 34rpx;
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  box-sizing: border-box;
+}
 
-	.tui-one-third {
-		width: 33%;
-	}
+.tui-pl-20 {
+  padding-left: 20rpx;
+}
 
-	.tui-news-title {
-		width: 100%;
-		font-size: 34rpx;
-		word-break: break-all;
-		word-wrap: break-word;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
-		box-sizing: border-box;
-	}
+.tui-pt20 {
+  padding-top: 20rpx;
+}
 
-	.tui-pl-20 {
-		padding-left: 20rpx;
-	}
+.tui-sub-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #999;
+  box-sizing: border-box;
+  line-height: 24rpx;
+}
 
-	.tui-pt20 {
-		padding-top: 20rpx;
-	}
+.tui-sub-source {
+  font-size: 26rpx;
+}
 
-	.tui-sub-box {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		color: #999;
-		box-sizing: border-box;
-		line-height: 24rpx;
-	}
+.tui-sub-cmt {
+  font-size: 24rpx;
+  line-height: 24rpx;
+  display: flex;
+  align-items: center;
+}
 
-	.tui-sub-source {
-		font-size: 26rpx;
-	}
+.tui-scale {
+  transform: scale(0.6);
+  transform-origin: center center;
+}
 
-	.tui-sub-cmt {
-		font-size: 24rpx;
-		line-height: 24rpx;
-		display: flex;
-		align-items: center;
-	}
+.tui-btm-badge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 24rpx;
+  color: #fff;
+  padding: 2rpx 12rpx;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 20;
+  transform: scale(0.8);
+  transform-origin: 100% 100%;
+}
 
+.tui-video {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: 0 0;
+}
 
-	.tui-scale {
-		transform: scale(0.6);
-		transform-origin: center center;
-	}
+.tui-icon {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 26rpx;
+}
 
-	.tui-btm-badge {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		font-size: 24rpx;
-		color: #fff;
-		padding: 2rpx 12rpx;
-		background: rgba(0, 0, 0, 0.6);
-		z-index: 20;
-		transform: scale(0.8);
-		transform-origin: 100% 100%;
-	}
+.tui-header {
+  padding: 80rpx 60rpx;
+}
 
-	.tui-video {
-		position: absolute;
-		z-index: 10;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		transform-origin: 0 0;
-	}
+.tui-title {
+  font-size: 36rpx;
+  color: #333;
+  font-weight: bold;
+}
 
-	.tui-icon {
-		background: rgba(0, 0, 0, 0.5);
-		border-radius: 50%;
-		padding: 26rpx;
-	}
+.tui-sub-title {
+  font-size: 28rpx;
+  color: #7a7a7a;
+  padding-top: 18rpx;
+}
 
-		.tui-header {
-		padding: 80rpx 60rpx;
-	}
+.tui-grid-icon {
+  width: 100%;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-	.tui-title {
-		font-size: 36rpx;
-		color: #333;
-		font-weight: bold;
-	}
-
-	.tui-sub-title {
-		font-size: 28rpx;
-		color: #7a7a7a;
-		padding-top: 18rpx;
-	}
-
-	.tui-grid-icon {
-		width: 100%;
-		height: 64rpx;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.tui-grid-label {
-		margin-top: 10rpx;
-		display: block;
-		text-align: center;
-		font-weight: 400;
-		color: #333;
-		font-size: 20rpx;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
+.tui-grid-label {
+  margin-top: 10rpx;
+  display: block;
+  text-align: center;
+  font-weight: 400;
+  color: #333;
+  font-size: 20rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>

@@ -1,32 +1,54 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-08 10:22:02
+ * @LastEditTime: 2021-11-08 10:50:25
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
 -->
 <template>
   <view class="container">
-    <tui-tabs
-      :tabs="tabs"
-      :top="0"
-      :isFixed="true"
-      :currentTab="currentTab > 3 ? 0 : currentTab"
-      @change="change"
-      :itemWidth="100 / tabs.length + '%'"
-    ></tui-tabs>
-	<!-- <friends></friends> -->
+    <view>
+      <tui-tabs
+        :tabs="tabs"
+        :top="0"
+        :isFixed="true"
+        :currentTab="currentTab > 3 ? 0 : currentTab"
+        @change="change"
+        :itemWidth="100 / tabs.length + '%'"
+      ></tui-tabs>
+    </view>
+    <view style="margin-top: 28px;">
+      <tui-grid>
+        <block v-for="(item, index) in routers" v-if="index < 5" :key="index">
+          <navigator :url="item.url" hover-class="none">
+            <tui-grid-item :cell="5">
+              <view class="tui-grid-icon">
+                <!-- <image
+                  class="tui-grid-img"
+                  :src="'https://thorui.cn/images/basic/' + item.img + '.png'"
+                  :style="{
+                    width: item.width + 'rpx',
+                    height: item.height + 'rpx',
+                  }"
+                /> -->
+                <text class="tui-grid-item-value">###</text>
+              </view>
+              <text class="tui-grid-label">{{ item.name }}</text>
+            </tui-grid-item>
+          </navigator>
+        </block>
+      </tui-grid>
+    </view>
+    <view>
+      
+    </view>
   </view>
 </template>
 
 <script>
 //注意：如果tabs数据动态传值:itemWidth="(100/tabs.length)+'%'"
-import friends from "./friends.vue"
 export default {
-  components:{
-	  friends,
-  },
   data() {
     return {
       currentTab: 0,
@@ -44,6 +66,43 @@ export default {
         },
         {
           name: "数据资产",
+        },
+      ],
+      routers: [
+        {
+          name: "指标名称",
+          url: "",
+          img: "color",
+          width: 74,
+          height: 74,
+        },
+        {
+          name: "指标名称",
+          url: "",
+          img: "flex",
+          width: 60,
+          height: 60,
+        },
+        {
+          name: "指标名称",
+          url: "",
+          img: "icon",
+          width: 56,
+          height: 56,
+        },
+        {
+          name: "指标名称",
+          url: "",
+          img: "button",
+          width: 64,
+          height: 64,
+        },
+        {
+          name: "指标名称",
+          url: "",
+          img: "tag",
+          width: 64,
+          height: 64,
         },
       ],
     };
@@ -81,5 +140,41 @@ export default {
 
 .tui-primary {
   color: #5677fc;
+}
+.container {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tui-title {
+  padding: 50rpx 30rpx 30rpx 30rpx;
+  font-size: 32rpx;
+  color: #333;
+  box-sizing: border-box;
+  font-weight: bold;
+  clear: both;
+}
+
+.tui-grid-icon {
+  width: 64rpx;
+  height: 64rpx;
+  margin: 0 auto;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tui-grid-label {
+  display: block;
+  text-align: center;
+  font-weight: 400;
+  color: #333;
+  font-size: 20rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 10rpx;
+}
+.tui-grid-label-5 {
+  margin-top: 0 !important;
+  color: #8a5966 !important;
 }
 </style>
