@@ -99,6 +99,21 @@
           }
         }
       }
+    },
+    {
+      "path": "pages/chat/chat/chat",
+      "style": {
+        "navigationBarTitleText": "聊天",
+        "backgroundColorTop": "#fff",
+        "backgroundColorBottom": "#fff",
+        "onReachBottomDistance": 0,
+        "app-plus": {
+          "bounce": "vertical",
+          "titleNView": {
+            "type": "transparent"
+          }
+        }
+      }
     }
   ],
   "easycom": {
