@@ -581,5 +581,5 @@ export default {
 				"keyword": "echo16666666666"
 			}]
 		}
-	]
+	] || []
 }

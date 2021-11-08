@@ -1,52 +1,141 @@
 {
-	"pages": [
-		{
-			"path": "pages/opportunity/index",
-			"style": {
-				"navigationBarTitleText": "opportunity"
-			}
-		},
-		{
-			"path": "pages/resource/index",
-			"style": {
-				"navigationBarTitleText": "resource"
-			}
-		},
-		{
-			"path": "pages/team/index",
-			"style": {
-				"navigationBarTitleText": "team"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	},
-	"tabBar": {
-		"color": "#666666",
-		"selectedColor": "#5677FC",
-		"backgroundColor": "#FFFFFF",
-		"list": [{
-				"pagePath": "pages/opportunity/index",
-				"text": "商机",
-				"iconPath": "static/images/tabbar/code_gray.png",
-				"selectedIconPath": "static/images/tabbar/code_active.png"
-			},
-			{
-				"pagePath": "pages/resource/index",
-				"text": "资源",
-				"iconPath": "static/images/tabbar/extend_gray.png",
-				"selectedIconPath": "static/images/tabbar/extend_active.png"
-			},
-			{
-				"pagePath": "pages/team/index",
-				"text": "团队",
-				"iconPath": "static/images/tabbar/thor_gray.png",
-				"selectedIconPath": "static/images/tabbar/thor_active.png"
-			}
-		]
-	}
+  "pages": [
+    {
+      "path": "pages/opportunity/index/index",
+      "style": {
+        "navigationBarTitleText": "商机",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 50,
+        "app-plus": {
+          "bounce": "vertical"
+        }
+      }
+    },
+    {
+      "path": "pages/team/index",
+      "style": {
+        "navigationBarTitleText": "team"
+      }
+    },
+    {
+      "path": "pages/resource/index",
+      "style": {
+        "navigationBarTitleText": "资源"
+      }
+    },
+    {
+      "path": "pages/opportunity/search/search",
+      "style": {
+        "navigationBarTitleText": "搜索",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black",
+        "backgroundColorTop": "#fff",
+        "backgroundColorBottom": "#fff",
+        "app-plus": {
+          "bounce": "vertical"
+        }
+      }
+    },
+    {
+      "path": "pages/opportunity/newsDetail/newsDetail",
+      "style": {
+        "navigationBarTitleText": "新闻详情",
+        "backgroundColorTop": "#fff",
+        "backgroundColorBottom": "#fff",
+        "onReachBottomDistance": 0,
+        "app-plus": {
+          "bounce": "vertical"
+        }
+      }
+    },
+    {
+      "path": "pages/opportunity/comment/comment",
+      "style": {
+        "navigationBarTitleText": "发表评论",
+        "backgroundColorTop": "#fff",
+        "backgroundColorBottom": "#fff",
+        "app-plus": {
+          "bounce": "vertical"
+        }
+      }
+    },
+    {
+      "path": "pages/opportunity/commentList/commentList",
+      "style": {
+        "navigationBarTitleText": "评论",
+        "backgroundColorTop": "#fff",
+        "backgroundColorBottom": "#fff",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 0,
+        "app-plus": {
+          "bounce": "vertical"
+        }
+      }
+    },
+    {
+      "path": "pages/opportunity/commentReply/commentReply",
+      "style": {
+        "navigationBarTitleText": "回复",
+        "backgroundColorTop": "#fff",
+        "backgroundColorBottom": "#fff",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 0,
+        "app-plus": {
+          "bounce": "vertical"
+        }
+      }
+    },
+    {
+      "path": "pages/opportunity/newsVideo/newsVideo",
+      "style": {
+        "navigationBarTitleText": "新闻详情",
+        "backgroundColorTop": "#fff",
+        "backgroundColorBottom": "#fff",
+        "onReachBottomDistance": 0,
+        "app-plus": {
+          "bounce": "vertical",
+          "titleNView": {
+            "type": "transparent"
+          }
+        }
+      }
+    }
+  ],
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "tui-(.*)": "@/components/thorui/tui-$1/tui-$1.vue"
+    }
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#5677FC",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      {
+        "pagePath": "pages/opportunity/index/index",
+        "text": "商机",
+        "iconPath": "static/images/tabbar/code_gray.png",
+        "selectedIconPath": "static/images/tabbar/code_active.png"
+      },
+      {
+        "pagePath": "pages/resource/index",
+        "text": "资源",
+        "iconPath": "static/images/tabbar/extend_gray.png",
+        "selectedIconPath": "static/images/tabbar/extend_active.png"
+      },
+      {
+        "pagePath": "pages/team/index",
+        "text": "团队",
+        "iconPath": "static/images/tabbar/thor_gray.png",
+        "selectedIconPath": "static/images/tabbar/thor_active.png"
+      }
+    ]
+  }
 }
