@@ -10,7 +10,7 @@
 			</view>
 			<tui-list-cell :unlined="true" @click="detail">
 				<view class="tui-friend-item">
-					<image src="/static/images/news/2.jpg" class="tui-img"></image>
+					<image src="/static/images/img_new_friends.png" class="tui-img"></image>
 					<view class="tui-name">新的朋友</view>
 				</view>
 			</tui-list-cell>
@@ -190,9 +190,9 @@
 	}
 
 	.tui-img {
-		width: 80rpx;
-		height: 80rpx;
-		border-radius: 50%;
+		width: 80rpx !important;
+		height: 80rpx !important;
+		border-radius: 50% !important;
 	}
 
 	.tui-name {
