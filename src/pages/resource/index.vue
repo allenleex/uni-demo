@@ -50,7 +50,8 @@
       新的微信好友
     </view>
     <tui-card
-      v-for="card in cards"
+      v-for="(card,index) in cards"
+      :key="index"
       :image="card.img"
       :title="card.title"
       :tag="card.tag"
@@ -93,6 +94,7 @@ export default {
       size: 28,
       margin: "0 8rpx",
       padding: "0 30rpx",
+      titleArr: ["内容A", "内容B", "欢迎体验ThorUI示例，希望可以带给你不一样的收获！"],
       navlinks: [
         {
           title: '微信用户',
