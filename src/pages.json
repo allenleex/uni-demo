@@ -15,7 +15,7 @@
       "path": "pages/opportunity/new/new",
       "style": {
         "navigationBarTitleText": "发布商机",
-        "enablePullDownRefresh": true,
+        "enablePullDownRefresh": false,
         "onReachBottomDistance": 50,
         "app-plus": {
           "bounce": "vertical"
@@ -26,7 +26,7 @@
       "path": "pages/opportunity/maps/maps",
       "style": {
         "navigationBarTitleText": "商机地图",
-        "enablePullDownRefresh": true,
+        "enablePullDownRefresh": false,
         "onReachBottomDistance": 50,
         "app-plus": {
           "bounce": "vertical"
