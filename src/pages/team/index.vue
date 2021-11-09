@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-09 09:52:49
+ * @LastEditTime: 2021-11-09 10:05:39
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
@@ -30,42 +30,49 @@
         </tui-grid-item>
       </block>
     </tui-grid>
-    <view class="tui-title">
-      我创建的团队
+    
+    <view class="container">
+      <view class="tui-title">
+        我创建的团队
+      </view>
+      <tui-card
+        v-for="(card, index) in teams"
+        :key="index"
+        :image="card.img"
+        :title="card.title"
+        :tag="card.tag"
+        @click="detail"
+      >
+        <!-- <template v-slot:body>
+          <view class="tui-default"> 卡片内容部分 slot=>body </view>
+        </template> -->
+        <!-- <template v-slot:footer>
+          <view class="tui-default"> 卡片底部 slot=>footer </view>
+        </template> -->
+      </tui-card>
+      <view class="tui-btn-box"><tui-button @click="detail">创建团队</tui-button></view>
     </view>
-    <tui-card
-      v-for="(card, index) in teams"
-      :key="index"
-      :image="card.img"
-      :title="card.title"
-      :tag="card.tag"
-      @click="detail"
-    >
-      <!-- <template v-slot:body>
-        <view class="tui-default"> 卡片内容部分 slot=>body </view>
-      </template> -->
-      <!-- <template v-slot:footer>
-        <view class="tui-default"> 卡片底部 slot=>footer </view>
-      </template> -->
-    </tui-card>
-    <view class="tui-title">
-      已加入的团队
+
+    <view class="container">
+      <view class="tui-title">
+        已加入的团队
+      </view>
+      <tui-card
+        v-for="(card, index) in teams"
+        :key="index"
+        :image="card.img"
+        :title="card.title"
+        :tag="card.tag"
+        @click="detail"
+      >
+        <!-- <template v-slot:body>
+          <view class="tui-default"> 卡片内容部分 slot=>body </view>
+        </template> -->
+        <!-- <template v-slot:footer>
+          <view class="tui-default"> 卡片底部 slot=>footer </view>
+        </template> -->
+      </tui-card>
     </view>
-    <tui-card
-      v-for="(card, index) in teams"
-      :key="index"
-      :image="card.img"
-      :title="card.title"
-      :tag="card.tag"
-      @click="detail"
-    >
-      <!-- <template v-slot:body>
-        <view class="tui-default"> 卡片内容部分 slot=>body </view>
-      </template> -->
-      <!-- <template v-slot:footer>
-        <view class="tui-default"> 卡片底部 slot=>footer </view>
-      </template> -->
-    </tui-card>
   </view>
 </template>
 
@@ -151,4 +158,11 @@ export default {
 </script>
 
 <style>
+.container {
+	box-sizing: border-box;
+}
+
+.tui-btn-box {
+	padding: 20rpx 30rpx 40rpx 30rpx;
+}
 </style>
