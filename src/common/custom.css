@@ -8,15 +8,6 @@
   line-height: 65rpx;
 }
 
-.tui-title {
-  padding: 30rpx 30rpx 30rpx 30rpx;
-  font-size: 24rpx;
-  color: #666;
-  box-sizing: border-box;
-  font-weight: bold;
-  clear: both;
-}
-
 .tui-grid-icon {
   width: 64rpx;
   height: 64rpx;
@@ -205,9 +196,12 @@
 }
 
 .tui-title {
-  font-size: 36rpx;
-  color: #333;
-  font-weight: bold;
+  padding: 30rpx 35rpx 30rpx 35rpx;
+  font-size: 30rpx;
+  color: #666;
+  box-sizing: border-box;
+  font-weight: 400;
+  clear: both;
 }
 
 .tui-sub-title {
@@ -550,3 +544,13 @@
 .tui-card {
 	margin: 10rpx 30rpx !important;
 }
+
+.tui-header-title {
+  color: #101010 !important;
+  font-weight: 600;
+}
+
+.tui-header-thumb {
+  border-radius: 25% !important;
+}
+

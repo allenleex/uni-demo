@@ -40,6 +40,36 @@
       }
     },
     {
+      "path": "pages/team/team",
+      "style": {
+        "navigationBarTitleText": "团队名称"
+      }
+    },
+    {
+      "path": "pages/team/member",
+      "style": {
+        "navigationBarTitleText": "成员名录"
+      }
+    },
+    {
+      "path": "pages/team/org",
+      "style": {
+        "navigationBarTitleText": "组织架构"
+      }
+    },
+    {
+      "path": "pages/team/manage",
+      "style": {
+        "navigationBarTitleText": "团队管理"
+      }
+    },
+    {
+      "path": "pages/team/my",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    },
+    {
       "path": "pages/resource/index",
       "style": {
         "navigationBarTitleText": "资源"
