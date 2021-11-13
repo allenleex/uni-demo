@@ -54,6 +54,7 @@
                   }"
                 /> -->
               <text class="tui-grid-item-value">999</text>
+              <!-- <count-to :startVal='0' :endVal='2017' :duration='4000'></count-to> -->
             </view>
             <text class="tui-grid-label">{{ item.name }}</text>
           </tui-grid-item>
