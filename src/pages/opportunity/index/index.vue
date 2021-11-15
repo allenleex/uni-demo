@@ -53,7 +53,8 @@
                     height: item.height + 'rpx',
                   }"
                 /> -->
-              <text class="tui-grid-item-value">999</text>
+              <!-- <text class="tui-grid-item-value">999</text> -->
+              <tui-digital-roller :value="value" duration="3"></tui-digital-roller>
             </view>
             <text class="tui-grid-label">{{ item.name }}</text>
           </tui-grid-item>
@@ -97,8 +98,9 @@
               <view
                 class="tui-btm-badge"
                 v-if="item.isVideo || item.imgNum > 3"
-                >{{ item.isVideo ? item.time : item.imgNum + "图" }}</view
               >
+                {{ item.isVideo ? item.time : item.imgNum + '图' }}
+              </view>
               <view class="tui-video" v-if="item.isVideo">
                 <tui-icon name="play" color="#fff" :size="24"></tui-icon>
               </view>
@@ -116,8 +118,9 @@
                     ? ''
                     : 'tui-pt20',
                 ]"
-                >{{ item.title }}</view
               >
+                {{ item.title }}
+              </view>
               <view
                 class="tui-sub-box"
                 :class="[!item.isVideo && item.imgNum === 1 ? '' : 'tui-pt20']"
@@ -131,8 +134,9 @@
                       :plain="true"
                       shape="circleRight"
                       v-if="item.isTop"
-                      >置顶</tui-tag
                     >
+                      置顶
+                    </tui-tag>
                   </view>
                 </view>
               </view>
@@ -149,20 +153,10 @@
 
     <!-- <tui-fab :btnList="btnList" maskClosable="true" @click="onClick"></tui-fab> -->
     <view class="tui-plus__box" @tap.stop="btnPlus">
-      <tui-icon
-        size="64"
-        unit="rpx"
-        color="#fff"
-        name="plus"
-      ></tui-icon>
+      <tui-icon size="64" unit="rpx" color="#fff" name="plus"></tui-icon>
     </view>
     <view class="tui-maps__box" @tap.stop="btnMaps">
-      <tui-icon
-        size="64"
-        unit="rpx"
-        color="#fff"
-        name="pic"
-      ></tui-icon>
+      <tui-icon size="64" unit="rpx" color="#fff" name="pic"></tui-icon>
     </view>
   </view>
 </template>
@@ -171,126 +165,126 @@
 export default {
   computed: {
     count() {
-      return this.newsList.length - 1;
+      return this.newsList.length - 1
     },
   },
   data() {
     return {
-      hotSearch: ["早安D站", "2019退役球星", "卡拉斯科"],
+      hotSearch: ['早安D站', '2019退役球星', '卡拉斯科'],
       banner: [
         {
-          img: "banner_1.jpg",
-          title: "山东官方：德尔加多已完成全部手续办理，具备上场比赛资格",
+          img: 'banner_1.jpg',
+          title: '山东官方：德尔加多已完成全部手续办理，具备上场比赛资格',
         },
         {
-          img: "banner_2.jpg",
-          title: "这个世界上，或许没有真正的托黑",
+          img: 'banner_2.jpg',
+          title: '这个世界上，或许没有真正的托黑',
         },
         {
-          img: "banner_3.jpg",
-          title: "金童再见！西班牙前锋托雷斯宣布退役",
+          img: 'banner_3.jpg',
+          title: '金童再见！西班牙前锋托雷斯宣布退役',
         },
       ],
       newsList: [],
       dataSources: [
         {
-          title: "卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题",
-          source: "手机中国网",
+          title: '卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题',
+          source: '手机中国网',
           cmtsNum: 2019,
           isTop: true,
           isVideo: false,
-          time: "00:00",
-          img: ["list_1.jpg"],
+          time: '00:00',
+          img: ['list_1.jpg'],
           imgNum: 1,
         },
         {
-          title: "荷兰媒体：德利赫特接近加盟尤文，转会费7000万，年薪2000万",
-          source: "央视网新闻",
+          title: '荷兰媒体：德利赫特接近加盟尤文，转会费7000万，年薪2000万',
+          source: '央视网新闻',
           cmtsNum: 3620,
           isTop: true,
           isVideo: false,
-          time: "00:00",
-          img: ["list_2.jpg"],
+          time: '00:00',
+          img: ['list_2.jpg'],
           imgNum: 1,
         },
         {
-          title: "申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效",
-          source: "体坛大精汇",
+          title: '申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效',
+          source: '体坛大精汇',
           cmtsNum: 5230,
           isTop: true,
           isVideo: false,
-          time: "00:00",
+          time: '00:00',
           img: [],
           imgNum: 0,
         },
         {
-          title: "卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题",
-          source: "体坛大精汇",
+          title: '卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题',
+          source: '体坛大精汇',
           cmtsNum: 7690,
           isTop: true,
           isVideo: false,
-          time: "00:00",
-          img: ["list_3.jpg", "list_2.jpg", "list_1.jpg"],
+          time: '00:00',
+          img: ['list_3.jpg', 'list_2.jpg', 'list_1.jpg'],
           imgNum: 20,
         },
         {
-          title: "敲锣鼓、放鞭炮！本周国际赛事MVP提名揭晓",
-          source: "体坛大精汇",
+          title: '敲锣鼓、放鞭炮！本周国际赛事MVP提名揭晓',
+          source: '体坛大精汇',
           cmtsNum: 2019,
           isTop: true,
           isVideo: false,
-          time: "00:00",
-          img: ["list_3.jpg"],
+          time: '00:00',
+          img: ['list_3.jpg'],
           imgNum: 1,
         },
         {
-          title: "申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效",
-          source: "手机中国网",
+          title: '申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效',
+          source: '手机中国网',
           cmtsNum: 2019,
           isTop: true,
           isVideo: false,
-          time: "00:00",
-          img: ["list_4.jpg"],
+          time: '00:00',
+          img: ['list_4.jpg'],
           imgNum: 1,
         },
         {
-          title: "荷兰媒体：德利赫特接近加盟尤文，转会费7000万，年薪2000万",
-          source: "手机中国网",
+          title: '荷兰媒体：德利赫特接近加盟尤文，转会费7000万，年薪2000万',
+          source: '手机中国网',
           cmtsNum: 2019,
           isTop: true,
           isVideo: true,
-          time: "00:58",
-          img: ["banner_2.jpg"],
+          time: '00:58',
+          img: ['banner_2.jpg'],
           imgNum: 1,
         },
         {
-          title: "敲锣鼓、放鞭炮！本周国际赛事MVP提名揭晓",
-          source: "体坛大精汇",
+          title: '敲锣鼓、放鞭炮！本周国际赛事MVP提名揭晓',
+          source: '体坛大精汇',
           cmtsNum: 5230,
           isTop: true,
           isVideo: false,
-          time: "00:00",
+          time: '00:00',
           img: [],
           imgNum: 0,
         },
         {
-          title: "卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题",
-          source: "体坛大精汇",
+          title: '卡拉斯科：俱乐部一些人的态度令我不解；需要解决出现的问题',
+          source: '体坛大精汇',
           cmtsNum: 7690,
           isTop: true,
           isVideo: false,
-          time: "00:00",
-          img: ["list_3.jpg", "list_2.jpg", "list_4.jpg"],
+          time: '00:00',
+          img: ['list_3.jpg', 'list_2.jpg', 'list_4.jpg'],
           imgNum: 8,
         },
         {
-          title: "申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效",
-          source: "手机中国网",
+          title: '申花客场1-0江苏终结九轮不胜，莫雷诺争议进球经VAR判罚有效',
+          source: '手机中国网',
           cmtsNum: 2019,
           isTop: true,
           isVideo: true,
-          time: "00:49",
-          img: ["banner_1.jpg"],
+          time: '00:49',
+          img: ['banner_1.jpg'],
           imgNum: 1,
         },
       ],
@@ -299,138 +293,144 @@ export default {
       pullUpOn: true,
       routers: [
         {
-          name: "指标名称",
-          url: "",
-          img: "color",
+          name: '指标名称',
+          url: '',
+          img: 'color',
           width: 74,
           height: 74,
         },
         {
-          name: "指标名称",
-          url: "",
-          img: "flex",
+          name: '指标名称',
+          url: '',
+          img: 'flex',
           width: 60,
           height: 60,
         },
         {
-          name: "指标名称",
-          url: "",
-          img: "icon",
+          name: '指标名称',
+          url: '',
+          img: 'icon',
           width: 56,
           height: 56,
         },
         {
-          name: "指标名称",
-          url: "",
-          img: "button",
+          name: '指标名称',
+          url: '',
+          img: 'button',
           width: 64,
           height: 64,
         },
         {
-          name: "指标名称",
-          url: "",
-          img: "tag",
+          name: '指标名称',
+          url: '',
+          img: 'tag',
           width: 64,
           height: 64,
         },
       ],
       btnList: [
         {
-          bgColor: "#5677FC",
+          bgColor: '#5677FC',
           //名称
-          text: "发布",
+          text: '发布',
           //字体大小
           fontSize: 28,
           //字体颜色
-          color: "#fff",
+          color: '#fff',
         },
       ],
-    };
+      value: 0,
+    }
   },
   onLoad: function (options) {
-    this.newsList = this.dataSources;
+    this.newsList = this.dataSources
+  },
+  onShow: function (options) {
+    setTimeout(() => {
+      this.value = 999
+    }, 250);
   },
   methods: {
     search: function () {
       uni.navigateTo({
-        url: "../search/search",
-      });
+        url: '../search/search',
+      })
     },
     bannerDetail: function () {
       uni.navigateTo({
-        url: "../newsDetail/newsDetail",
-      });
+        url: '../newsDetail/newsDetail',
+      })
     },
     detail(e) {
-      let index = e.index;
-      let url = "../newsDetail/newsDetail";
+      let index = e.index
+      let url = '../newsDetail/newsDetail'
       if (this.newsList[index].isVideo) {
-        url = "../newsVideo/newsVideo";
+        url = '../newsVideo/newsVideo'
       }
       uni.navigateTo({
         url: url,
-      });
+      })
     },
     onClick(e) {
-      let index = e.index;
+      let index = e.index
       switch (index) {
         case 0:
           uni.navigateTo({
-            url: "/pages/opportunity/new/new",
-          });
-          break;
+            url: '/pages/opportunity/new/new',
+          })
+          break
         default:
-          break;
+          break
       }
     },
     btnPlus() {
       uni.navigateTo({
-        url: "/pages/opportunity/new/new",
-      });
+        url: '/pages/opportunity/new/new',
+      })
     },
     btnMaps() {
       uni.navigateTo({
-        url: "/pages/opportunity/maps/maps",
-      });
+        url: '/pages/opportunity/maps/maps',
+      })
     },
   },
   //页面相关事件处理函数--监听用户下拉动作
   onPullDownRefresh: function () {
-    this.newsList = this.dataSources;
-    this.pageIndex = 1;
-    this.pullUpOn = true;
-    this.loadding = false;
-    uni.stopPullDownRefresh();
+    this.newsList = this.dataSources
+    this.pageIndex = 1
+    this.pullUpOn = true
+    this.loadding = false
+    uni.stopPullDownRefresh()
     let options = {
-      msg: "刷新成功，为你更新了10条数据",
+      msg: '刷新成功，为你更新了10条数据',
       duration: 2000,
-      type: "translucent",
-    };
+      type: 'translucent',
+    }
     setTimeout(() => {
-      this.$refs.toast.showTips(options);
-    }, 300);
+      this.$refs.toast.showTips(options)
+    }, 300)
   },
 
   // 页面上拉触底事件的处理函数
   onReachBottom: function () {
-    if (!this.pullUpOn) return;
-    this.loadding = true;
+    if (!this.pullUpOn) return
+    this.loadding = true
     if (this.pageIndex == 3) {
-      this.loadding = false;
-      this.pullUpOn = false;
+      this.loadding = false
+      this.pullUpOn = false
     } else {
-      let arr = JSON.parse(JSON.stringify(this.dataSources));
+      let arr = JSON.parse(JSON.stringify(this.dataSources))
       if (this.pageIndex >= 1) {
         for (let item of arr) {
-          item.isTop = false;
+          item.isTop = false
         }
       }
-      this.newsList = this.newsList.concat(arr);
-      this.pageIndex = this.pageIndex + 1;
-      this.loadding = false;
+      this.newsList = this.newsList.concat(arr)
+      this.pageIndex = this.pageIndex + 1
+      this.loadding = false
     }
   },
-};
+}
 </script>
 
 <style>

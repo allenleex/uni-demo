@@ -160,6 +160,21 @@
           }
         }
       }
+    },
+    {
+      "path": "pages/va/me",
+      "style": {
+        "navigationBarTitleText": "我的",
+        "backgroundColorTop": "#fff",
+        "backgroundColorBottom": "#fff",
+        "onReachBottomDistance": 0,
+        "app-plus": {
+          "bounce": "vertical",
+          "titleNView": {
+            "type": "transparent"
+          }
+        }
+      }
     }
   ],
   "easycom": {

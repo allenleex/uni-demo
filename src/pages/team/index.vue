@@ -46,9 +46,9 @@
         >
           <!--tips:sticky组件中最好不要嵌套其他自定义组件-->
           <template v-slot:header>
-            <view class="tui-list-cell-divider">{{
-              list.letter == "well" ? "#" : list.letter
-            }}</view>
+            <view class="tui-list-cell-divider">
+              {{ list.letter == 'well' ? '#' : list.letter }}
+            </view>
           </template>
           <template v-slot:content>
             <view
@@ -91,18 +91,20 @@
           class="tui-indexed-list-text"
           :style="{ height: indexBarItemHeight + 'px' }"
         >
-          {{ items.letter == "well" ? "#" : items.letter }}
+          {{ items.letter == 'well' ? '#' : items.letter }}
         </view>
       </view>
       <view
         class="tui-indexed-list-alert"
         v-if="touchmove && lists[touchmoveIndex].letter"
       >
-        <text>{{
-          lists[touchmoveIndex].letter == "well"
-            ? "#"
-            : lists[touchmoveIndex].letter
-        }}</text>
+        <text>
+          {{
+            lists[touchmoveIndex].letter == 'well'
+              ? '#'
+              : lists[touchmoveIndex].letter
+          }}
+        </text>
       </view>
     </view>
     <view class="tab tab2" v-if="currentTeamTab == 1">
@@ -110,18 +112,21 @@
         <tui-org-tree collapsible :treeData="treeData"></tui-org-tree>
       </scroll-view>
     </view>
+    <view class="tui-me__box" @tap.stop="btnMe">
+      <tui-icon size="64" unit="rpx" color="#fff" name="people"></tui-icon>
+    </view>
   </view>
 </template>
 
 <script>
-import cityData from "@/utils/index.list.js";
+import cityData from '@/utils/index.list.js'
 //注意：如果tabs数据动态传值:itemWidth="(100/tabs.length)+'%'"
 export default {
   computed: {
     last() {
       return function (data, index) {
-        return data.length - 1 == index ? true : false;
-      };
+        return data.length - 1 == index ? true : false
+      }
     },
   },
   data() {
@@ -129,96 +134,96 @@ export default {
       currentTeamTab: 0,
       tabs: [
         {
-          name: "成员名录",
+          name: '成员名录',
           isDot: true,
         },
         {
-          name: "组织架构",
+          name: '组织架构',
         },
         {
-          name: "团队管理",
+          name: '团队管理',
         },
         {
-          name: "我的主页",
+          name: '我的主页',
         },
       ],
       treeData: [
         {
-          text: "广州叽叽喳喳信息科技有限公司",
+          text: '广州叽叽喳喳信息科技有限公司',
           value: 1,
           //vertical,horizontal 为空则自适应排列
-          align: "",
+          align: '',
           children: [
             {
-              text: "总经理：XXX",
+              text: '总经理：XXX',
               value: 100,
               children: [
                 {
-                  text: "市场部",
+                  text: '市场部',
                   value: 200,
-                  align: "horizontal",
+                  align: 'horizontal',
                   children: [
                     {
-                      text: "区域经理",
+                      text: '区域经理',
                       value: 201,
                       children: [],
                     },
                     {
-                      text: "售后服务",
+                      text: '售后服务',
                       value: 202,
                       children: [],
                     },
                     {
-                      text: "综合助理",
+                      text: '综合助理',
                       value: 203,
                       children: [],
                     },
                     {
-                      text: "网络工程师",
+                      text: '网络工程师',
                       value: 204,
                       children: [],
                     },
                   ],
                 },
                 {
-                  text: "财务部",
+                  text: '财务部',
                   value: 300,
-                  align: "horizontal",
+                  align: 'horizontal',
                   children: [
                     {
-                      text: "财务",
+                      text: '财务',
                       value: 301,
                       children: [],
                     },
                     {
-                      text: "出纳",
+                      text: '出纳',
                       value: 302,
                       children: [],
                     },
                   ],
                 },
                 {
-                  text: "研发部",
+                  text: '研发部',
                   value: 400,
-                  align: "horizontal",
+                  align: 'horizontal',
                   children: [
                     {
-                      text: "设计",
+                      text: '设计',
                       value: 401,
                       children: [],
                     },
                     {
-                      text: "雕刻",
+                      text: '雕刻',
                       value: 402,
                       children: [],
                     },
                     {
-                      text: "结构工程",
+                      text: '结构工程',
                       value: 403,
                       children: [],
                     },
                     {
-                      text: "工艺工程",
+                      text: '工艺工程',
                       value: 403,
                       children: [],
                     },
@@ -237,23 +242,23 @@ export default {
       indexBarItemHeight: 0, // 索引表子项的高度
       winHeight: 0,
       scrollTop: 0,
-    };
+    }
   },
   onLoad: function (options) {
-    const that = this;
+    const that = this
     setTimeout(() => {
       uni.getSystemInfo({
         success: function (res) {
-          let winHeight = res.windowHeight;
-          let barHeight = winHeight - uni.upx2px(232);
-          that.winHeight = winHeight;
-          that.indexBarHeight = barHeight;
-          that.indexBarItemHeight = barHeight / 25;
-          that.titleHeight = uni.upx2px(132);
-          that.lists = cityData.list;
+          let winHeight = res.windowHeight
+          let barHeight = winHeight - uni.upx2px(232)
+          that.winHeight = winHeight
+          that.indexBarHeight = barHeight
+          that.indexBarItemHeight = barHeight / 25
+          that.titleHeight = uni.upx2px(132)
+          that.lists = cityData.list
         },
-      });
-    }, 10);
+      })
+    }, 10)
   },
   watch: {
     touchmoveIndex: function () {
@@ -261,70 +266,75 @@ export default {
         uni.pageScrollTo({
           scrollTop: this.lists[this.touchmoveIndex].stickyTop + 1,
           duration: 10,
-        });
+        })
       }
     },
   },
   methods: {
     change(e) {
-      this.currentTeamTab = e.index;
+      this.currentTeamTab = e.index
     },
     touchStart(e) {
-      this.touchmove = true;
-      let pageY = e.changedTouches[0].pageY - this.scrollTop;
+      this.touchmove = true
+      let pageY = e.changedTouches[0].pageY - this.scrollTop
       let index = Math.floor(
-        (pageY - this.titleHeight) / this.indexBarItemHeight
-      );
-      let item = this.lists[index];
+        (pageY - this.titleHeight) / this.indexBarItemHeight,
+      )
+      let item = this.lists[index]
       if (item) {
-        this.touchmoveIndex = index;
+        this.touchmoveIndex = index
       }
     },
     touchMove(e) {
-      let pageY = e.changedTouches[0].pageY - this.scrollTop;
+      let pageY = e.changedTouches[0].pageY - this.scrollTop
       let index = Math.floor(
-        (pageY - this.titleHeight) / this.indexBarItemHeight
-      );
-      let item = this.lists[index];
+        (pageY - this.titleHeight) / this.indexBarItemHeight,
+      )
+      let item = this.lists[index]
       if (item) {
-        this.touchmoveIndex = index;
+        this.touchmoveIndex = index
       }
     },
     touchEnd() {
-      this.touchmove = false;
-      this.touchmoveIndex = -1;
+      this.touchmove = false
+      this.touchmoveIndex = -1
     },
     touchCancel() {
-      this.touchmove = false;
-      this.touchmoveIndex = -1;
+      this.touchmove = false
+      this.touchmoveIndex = -1
     },
     handleClick(index) {
-      if (index === undefined || this.touchmove) return;
-      let item = this.lists[index];
+      if (index === undefined || this.touchmove) return
+      let item = this.lists[index]
       if (item) {
-        this.touchmoveIndex = index;
+        this.touchmoveIndex = index
       }
     },
     stickyChange: function (e) {
-      let index = e.index;
-      this.lists[index].stickyTop = e.top;
+      let index = e.index
+      this.lists[index].stickyTop = e.top
     },
     search: function () {
       uni.navigateTo({
-        url: "../../news/search/search",
-      });
+        url: '../../news/search/search',
+      })
     },
     detail: function () {
-      console.log("------ chat");
+      console.log('------ chat')
       uni.navigateTo({
-        url: "../chat/chat/chat",
+        url: '../chat/chat/chat',
+      })
+    },
+    btnMe() {
+      uni.navigateTo({
+        url: "/pages/va/me",
       });
     },
   },
   onPageScroll(e) {
-    this.scrollTop = e.scrollTop;
+    this.scrollTop = e.scrollTop
   },
-};
+}
 </script>
 
 <style>
@@ -335,5 +345,17 @@ export default {
 .tab {
   margin-top: 28px;
 }
-
+.tui-me__box {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+  background-color: rgba(86, 119, 252, 0.95);
+  box-shadow: 0px 0px 15px rgba(86, 119, 252, 0.75);
+  position: fixed;
+  bottom: 100rpx;
+  right: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
