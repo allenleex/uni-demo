@@ -53,7 +53,6 @@
                     height: item.height + 'rpx',
                   }"
                 /> -->
-              <!-- <text class="tui-grid-item-value">999</text> -->
               <tui-digital-roller :value="value" duration="3"></tui-digital-roller>
             </view>
             <text class="tui-grid-label">{{ item.name }}</text>
