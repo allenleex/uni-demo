@@ -15,7 +15,7 @@
       "path": "pages/opportunity/new/new",
       "style": {
         "navigationBarTitleText": "发布商机",
-        "enablePullDownRefresh": true,
+        "enablePullDownRefresh": false,
         "onReachBottomDistance": 50,
         "app-plus": {
           "bounce": "vertical"
@@ -26,7 +26,7 @@
       "path": "pages/opportunity/maps/maps",
       "style": {
         "navigationBarTitleText": "商机地图",
-        "enablePullDownRefresh": true,
+        "enablePullDownRefresh": false,
         "onReachBottomDistance": 50,
         "app-plus": {
           "bounce": "vertical"
@@ -37,6 +37,36 @@
       "path": "pages/team/index",
       "style": {
         "navigationBarTitleText": "团队"
+      }
+    },
+    {
+      "path": "pages/team/team",
+      "style": {
+        "navigationBarTitleText": "团队名称"
+      }
+    },
+    {
+      "path": "pages/team/member",
+      "style": {
+        "navigationBarTitleText": "成员名录"
+      }
+    },
+    {
+      "path": "pages/team/org",
+      "style": {
+        "navigationBarTitleText": "组织架构"
+      }
+    },
+    {
+      "path": "pages/team/manage",
+      "style": {
+        "navigationBarTitleText": "团队管理"
+      }
+    },
+    {
+      "path": "pages/team/my",
+      "style": {
+        "navigationBarTitleText": "我的"
       }
     },
     {

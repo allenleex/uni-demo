@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-11-08 07:57:41
- * @LastEditTime: 2021-11-08 17:46:02
+ * @LastEditTime: 2021-11-09 10:50:54
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \uni-demo\src\pages\resource\index.vue
@@ -71,14 +71,24 @@
               ></image>
               <view class="tui-name">{{ item.name }}</view>
             </view>
-          </template>
-        </tui-sticky>
+            <text class="tui-grid-label">{{ item.title }}</text>
+            <!-- <view class="tui-rate-container">
+              <tui-rate :current="3" hollow="true" disabled="true"></tui-rate>
+            </view> -->
+          </navigator>
+        </tui-grid-item>
       </block>
-      <!--联系人列表-->
-      <view class="tui-footer" v-if="lists.length">120位联系人</view>
-      <view
-        class="tui-indexed-list-bar"
-        :style="{ height: indexBarHeight + 'px' }"
+    </tui-grid>
+
+    <view class="container">
+      <view class="tui-title"> 我创建的团队 </view>
+      <my-team-card
+        v-for="(card, index) in teams"
+        :key="index"
+        :image="card.img"
+        :title="card.title"
+        :tag="card.tag"
+        @click="detail"
       >
         <view
           @touchstart.stop="touchStart"
@@ -107,10 +117,24 @@
         </text>
       </view>
     </view>
-    <view class="tab tab2" v-if="currentTeamTab == 1">
-      <scroll-view scroll-x class="tui-scroll__view">
-        <tui-org-tree collapsible :treeData="treeData"></tui-org-tree>
-      </scroll-view>
+
+    <view class="container">
+      <view class="tui-title"> 已加入的团队 </view>
+      <tui-card
+        v-for="(card, index) in teams"
+        :key="index"
+        :image="card.img"
+        :title="card.title"
+        :tag="card.tag"
+        @click="detail"
+      >
+        <!-- <template v-slot:body>
+          <view class="tui-default"> 卡片内容部分 slot=>body </view>
+        </template> -->
+        <!-- <template v-slot:footer>
+          <view class="tui-default"> 卡片底部 slot=>footer </view>
+        </template> -->
+      </tui-card>
     </view>
     <view class="tui-me__box" @tap.stop="btnMe">
       <tui-icon size="64" unit="rpx" color="#fff" name="people"></tui-icon>
@@ -131,8 +155,7 @@ export default {
   },
   data() {
     return {
-      currentTeamTab: 0,
-      tabs: [
+      navlinks: [
         {
           name: '成员名录',
           isDot: true,
@@ -147,7 +170,21 @@ export default {
           name: '我的主页',
         },
       ],
-      treeData: [
+      teams: [
+        {
+          img: {
+            url: "/static/images/news/avatar_1.jpg",
+            width: 80,
+            height: 80,
+            circle: false,
+          },
+          title: {
+            text: "神鹰一号团队",
+          },
+          tag: {
+            text: "成员 22",
+          },
+        },
         {
           text: '广州叽叽喳喳信息科技有限公司',
           value: 1,
@@ -339,7 +376,6 @@ export default {
 
 <style>
 .container {
-  padding: 40rpx 0 120rpx 0;
   box-sizing: border-box;
 }
 .tab {

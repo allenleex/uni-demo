@@ -2,13 +2,13 @@
 	<view class="tui-maps-container">
 		<map class="tui-map" :latitude="lat" :longitude="lng" :markers="covers" @markertap="marker" :scale="12">
 			<!-- #ifndef MP-ALIPAY -->
-			<cover-image class="tui-cover-back" src="/static/images/layout/icon_back_3x.png" @tap.stop="back" />
+			<!-- <cover-image class="tui-cover-back" src="/static/images/layout/icon_back_3x.png" @tap.stop="back" /> -->
 			<!-- #endif -->
 		</map>
 		<!-- #ifdef MP-ALIPAY -->
-		<cover-image class="tui-cover-back" src="/static/images/layout/icon_back_3x.png" @tap.stop="back" />
+		<!-- <cover-image class="tui-cover-back" src="/static/images/layout/icon_back_3x.png" @tap.stop="back" /> -->
 		<!-- #endif -->
-		<view class="search-bar">
+		<!-- <view class="search-bar">
 			<view class="search-bar-form">
 				<view class="search-bar-box">
 					<icon class="icon-search-in-box" type="search" :size="14" color="#999"></icon>
@@ -24,8 +24,8 @@
 				</view>
 			</view>
 			<view class="cancel-btn" @tap="hideInput" v-show="inputShowed">取消</view>
-		</view>
-		<scroll-view scroll-y class="tui-scroll-view" :style="{ height: scrollH + 'px' }" @scrolltolower="pullUp">
+		</view> -->
+		<scroll-view scroll-y class="tui-scroll-view border-top-2-gray" :style="{ height: scrollH + 'px' }" @scrolltolower="pullUp">
 			<view class="tui-list">
 				<view class="tui-list-cell" :class="[index == address.length - 1 ? 'tui-cell-last' : '']" v-for="(item, index) in address"
 				 :key="index">
@@ -486,5 +486,9 @@
 		color: #333;
 		font-size: 24rpx;
 		line-height: 30rpx;
+	}
+
+	.border-top-2-gray {
+		border-top: 2px solid #F0F0F0;
 	}
 </style>
